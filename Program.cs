@@ -6,33 +6,27 @@ namespace CAB301
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to the Community Library");
-            Console.WriteLine("-----------Main Menu------------");
-            Console.WriteLine("1. Staff Login");
-            Console.WriteLine("2. Member Login");
-            Console.WriteLine("3. Exit");
-            Console.WriteLine("--------------------------------");
-            Console.WriteLine("Please Make a selection (1-2, or 0 to exit):");
+            // Initilise the menu
+           Menu menu = new Menu();
 
-            int input = int.Parse(Console.ReadLine());
-
-            if (input == 1)
+            // Display main menu
+            menu.Main();
+            if (menu.getInput() == 1)
             {
-                Console.WriteLine("---------Staff Menu----------");
-                Console.WriteLine("1. Add a new movie DVD");
-                Console.WriteLine("2. Remove a movie DVD");
+                menu.staff();
+                if (menu.getInput() == 0)
+                {
+                    menu.Main();
+                }
 
-                Console.WriteLine("Please Make a selection (1-2, or 0 to exit):");
-                Console.ReadLine();
-            }
-            else if (input == 2)
+            } else if (menu.getInput() == 2) 
             {
-                Console.WriteLine("--------Member Menu---------");
+                menu.member();
 
-                Console.WriteLine("Please Make a selection (1-2, or 0 to exit):");
-                Console.ReadLine();
+            } else if ( menu.getInput() == 0)
+            {
+                Environment.Exit(0);
             }
-            else Environment.Exit(0);
         }
     }
 }

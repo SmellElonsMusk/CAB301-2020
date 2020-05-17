@@ -188,7 +188,11 @@ namespace CAB301
                             Console.WriteLine("Please Make a selection (1, or 0 to return to main menu):");
                             break;
                         case 3: // Add a new member
-                            Console.WriteLine("Staff Menu Option 3");
+                            MemberCollection memberCollection = new MemberCollection();
+                            memberCollection.add();
+                            
+                            // add some testing code to see if member was created successfully
+
                             break;
                         case 4:
                             Console.WriteLine("Staff Menu Option 4");

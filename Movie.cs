@@ -25,7 +25,11 @@ namespace CAB301
             this.classification = classification;
             this.releaseDate = releaseDate;
         }
-
+        public override string ToString()
+        {
+            return title + " " + starring + " " + director + " " + duration + " " + genre + " " +  classification + " " + releaseDate;
+        }
 
     }
+    
 }

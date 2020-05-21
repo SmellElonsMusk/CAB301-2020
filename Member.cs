@@ -14,16 +14,18 @@ namespace CAB301
         private int phoneNumber;
         private string username;
         private int password;
+        private Movie[] moviesBorrowed;
 
         //
-        public void register(string firstName, string lastName, string homeAddress, int phoneNumber, int password) {
+        public void register(string firstName, string lastName, string homeAddress, int phoneNumber, int password)
+        {
             this.firstName = firstName;
             this.lastName = lastName;
             this.homeAddress = homeAddress;
             this.phoneNumber = phoneNumber;
             this.username = firstName + lastName;
             this.password = password;
-        }      
+        }
 
         public string getName()
         {
@@ -43,6 +45,26 @@ namespace CAB301
         public int getPhoneNumber()
         {
             return phoneNumber;
+        }
+
+        public string getUsername()
+        {
+            return username;
+        }
+
+        public int getPassword()
+        {
+            return password;
+        }
+
+        public void printinfo()
+        {
+            Console.WriteLine("The following user was created:");
+            Console.WriteLine("Name     : " + firstName);
+            Console.WriteLine("Lastname : " + lastName);
+            Console.WriteLine("Username : " + username);
+            Console.WriteLine("Password : " + password);
+            Console.ReadKey();
         }
 
     }

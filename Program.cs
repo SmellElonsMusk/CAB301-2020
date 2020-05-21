@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 using System.Reflection.Metadata.Ecma335;
 
 namespace CAB301
@@ -7,17 +8,28 @@ namespace CAB301
     {
         static void Main(string[] args)
         {
-            
+
             MovieCollection movieCollection = new MovieCollection(); // Initliase The class
+            MemberCollection memberCollection = new MemberCollection(); // initliases memberCollection Class
+
             movieCollection.createCollection(); // Creates the list
-            MainMenu(movieCollection);
+            MainMenu(movieCollection, memberCollection);
+
+
+
+
+            /* Testing code 
+             * Build  Add movies and members
+             */
+
         }
 
-       
 
 
 
-        public static void MainMenu(MovieCollection movieCollection)
+
+
+        public static void MainMenu(MovieCollection movieCollection, MemberCollection memberCollection)
         {
             Console.WriteLine("Welcome to the Community Library");
             Console.WriteLine("-----------Main Menu------------");
@@ -30,14 +42,15 @@ namespace CAB301
             // Read Console Input
             string input = Console.ReadLine();
 
-            // Check if input is a number 
+            // Check if input is a number 1
             int num;
             bool result = int.TryParse(input, out num);
             if (result)
             {
                 Console.Clear();
-                MenuItem(num, movieCollection);
-            } else { Console.WriteLine("Please enter a valid Number");}
+                MenuItem(num, movieCollection, memberCollection);
+            }
+            else { Console.WriteLine("Please enter a valid Number"); }
 
         }
 
@@ -56,7 +69,8 @@ namespace CAB301
                 if (input1 == "staff" && input2 == "123")
                 {
                     succesful = true;
-                } else
+                }
+                else
                 {
                     Console.Clear();
                     Console.WriteLine("Login failed. Please try again.");
@@ -95,12 +109,13 @@ namespace CAB301
         }
 
 
-        public static void MenuItem(int mainMenuSelection, MovieCollection movieCollection)
+        public static void MenuItem(int mainMenuSelection, MovieCollection movieCollection, MemberCollection memberCollection)
         {
             if (mainMenuSelection == 0)
             {
                 Environment.Exit(0);
-            } else
+            }
+            else
             {
 
                 switch (mainMenuSelection)
@@ -116,7 +131,7 @@ namespace CAB301
                         Console.WriteLine("4. Find a registered member's phone number");
                         Console.WriteLine("0. Return to main menu");
                         Console.WriteLine("----------------------------");
-                        Console.WriteLine("Please Make a selection (1-4, or 0 to return to main menu):");                     
+                        Console.WriteLine("Please Make a selection (1-4, or 0 to return to main menu):");
                         break;
 
                     case 2:
@@ -134,7 +149,7 @@ namespace CAB301
                         break;
                 }
             }
-            
+
 
             string input = Console.ReadLine();
             // Check if input is a number 
@@ -143,43 +158,38 @@ namespace CAB301
             if (result)
             {
                 Console.Clear();
-                Do(mainMenuSelection, num, movieCollection);
+                Do(mainMenuSelection, num, movieCollection, memberCollection);
             }
             else { Console.WriteLine("Please enter a valid Number"); }
         }
 
-        public static void Do(int menu, int selection, MovieCollection movieCollection)
+        public static void Do(int menu, int selection, MovieCollection movieCollection, MemberCollection memberCollection)
         {
+
+
             bool repeatMenu = true;
 
-            switch (menu) 
+            switch (menu)
             {
                 case 1: // Staff Menu
 
                     if (selection == 0)
                     {
-                        MainMenu(movieCollection);
+                        MainMenu(movieCollection, memberCollection);
                     }
 
-                    switch (selection) 
+                    switch (selection)
                     {
                         case 1: // Add a new movie DVD
                             // TODO: needs more work
-                            while (repeatMenu == true) {
+                            while (repeatMenu == true)
+                            {
                                 movieCollection.addMovie();
                                 Console.WriteLine("----------------------------");
-                                Console.Write("Do you want to add another? y/n: ");
-
-                                if (Console.ReadLine() == "y")
-                                {
-                                    repeatMenu = true;
-                                } 
                                 
-                                if (Console.ReadLine() == "n")
-                                {
-                                    repeatMenu = false;
-                                }
-                            }                         
+                                
+
+                            }
                             break;
                         case 2: // Remove a movie DVD
                             movieCollection.removeMovie();
@@ -188,9 +198,10 @@ namespace CAB301
                             Console.WriteLine("Please Make a selection (1, or 0 to return to main menu):");
                             break;
                         case 3: // Add a new member
-                            MemberCollection memberCollection = new MemberCollection();
-                            memberCollection.add();
-                            
+
+                            memberCollection.register();
+                            //memberCollection.printAllMembersInfo();
+
                             // add some testing code to see if member was created successfully
 
                             break;
@@ -203,9 +214,9 @@ namespace CAB301
                 case 2: // Member Menu
                     if (selection == 0)
                     {
-                        MainMenu(movieCollection);
+                        MainMenu(movieCollection, memberCollection);
                     }
-                    switch (selection) 
+                    switch (selection)
                     {
                         case 1: // Add what to do
                             Console.WriteLine("Member Menu Option 1");

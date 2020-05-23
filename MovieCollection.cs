@@ -18,20 +18,23 @@ namespace CAB301
             return data;
         }
 
-        // Adds the data to the Node
+        /* Adds the data to the Node
+         */
         public TreeNode(Movie movie)
         {
             this.data = movie;
         }
 
-        // Right Child Node
+        /* Right Child Node
+         */
         public TreeNode RightNode
         {
             get { return rightNode; }
             set { rightNode = value; }
         }
 
-        // Left Child Node
+        /* Left Child Node
+        */
         public TreeNode LeftNode
         {
             get { return leftNode; }
@@ -39,29 +42,30 @@ namespace CAB301
         }
 
 
-        /*
-         * Adds the node to an empty spot in the tree
+        /* Adds new node down the tree when it finds an empty spot
          * 
          * == 0 : The same title.
          * > 0  : First title preeceeds second.
          * < )  : First title comes After first.
          * 
          */
-        public void add(Movie movie)
+        public void Add(Movie movie)
         {
+            // If the new movies title comes after the current title -> insert to the right node
             if (String.Compare(movie.getTitle(), data.getTitle()) <= 0)
             {
-                if (rightNode == null) // If Node does not exist, create
+
+                if (rightNode == null)
                 {
-                    rightNode = new TreeNode(movie);
+                    rightNode = new TreeNode(movie); // If the right node exists -> repeat the loop 
                 }
                 else // If Right Node Exists
                 {
-                    rightNode.add(movie);
+                    rightNode.Add(movie);
                 }
 
             }
-            else
+            else // If the new movies title comes before the current title -> insert to the left node
             {
                 if (leftNode == null) // If Node does not exist, create
                 {
@@ -69,16 +73,16 @@ namespace CAB301
                 }
                 else // If Left Node Exists
                 {
-                    leftNode.add(movie);
+                    leftNode.Add(movie); // If the left node exists -> repeat the loop
                 }
             }
         }
 
-        /*
-         * Finds the node storing the data
+        /* Finds the node storing the data
+         * 
          * 
          */
-        public TreeNode Find(Movie movie) // While loop - can be changed to recursive if statement
+        public TreeNode Find(Movie movie) 
         {
             TreeNode currentNode = this;
 
@@ -103,30 +107,69 @@ namespace CAB301
 
         }
 
+        /* Searches the Tree In Order
+         * Left->Root->Right Nodes recursively of each subtree 
+         * Sorted Alphabetically
+         */
+        public void TraverseInOrder()
+        {
+            if (leftNode != null)
+            {
+                leftNode.TraverseInOrder();
+
+            }
+
+            if (rightNode != null)
+            {
+                rightNode.TraverseInOrder();
+            }
+
+            Console.WriteLine(data.ToString());
+        }
+
+        /* Searches Tree
+         * Root->Left->Right Nodes recursively of each subtree 
+         */
+        public void PreOrderTraversal()
+        {
+            Console.WriteLine(data.ToString());
+
+            if (leftNode != null)
+            {
+                leftNode.PreOrderTraversal();
+            }
+
+            if (rightNode != null)
+            {
+                rightNode.PreOrderTraversal();
+            }
+        }
+
+        /* Prints the movie info to the screen
+         */
         public void PrintInfo()
         {
             Console.WriteLine(data.ToString());
         }
 
-
-
-
     }
 
+    /* Binary Search Tree Main Class
+     */
     class BinarySearchTree
     {
         private TreeNode root;
 
-        /*
-         * Create the root Node
+        /* Create the root Node
+         * 
          */
         public TreeNode Root
         {
             get { return root; }
         }
 
-        /*
-         * Find the desireed Node
+        /* Find the desireed Node
+         * 
          */
         public TreeNode Find(Movie movie)
         {
@@ -140,11 +183,13 @@ namespace CAB301
             }
         }
 
-        public void add(Movie movie)
+        /* Adds a new Node
+         */
+        public void Add(Movie movie)
         {
             if (root != null) // adds new movie to tree
             {
-                root.add(movie);
+                root.Add(movie);
             }
             else // Creates new root and adds moive as root
             {
@@ -152,24 +197,179 @@ namespace CAB301
             }
         }
 
+        /* Removes the selected node and adjusts the tree
+         * 
+         * 
+         */
+        public void Remove(Movie movie)
+        {
+            TreeNode thisNode = root;
+            TreeNode parent = root;
+            bool isLeftChild = false;
+
+            // Test to see if tree is Empty
+            if (thisNode == null)
+            {
+                return; // Nothing to delete
+            }
+            // Find the node where the movie is stored
+            // Keeps Looping until it is fond
+            while (thisNode != null && thisNode.Data() != movie)
+            {
+                parent = thisNode;
+
+                // Title comes before -> check the left child node
+                if (String.Compare(movie.getTitle(), thisNode.Data().getTitle()) > 0)
+                {
+                    thisNode = thisNode.LeftNode;
+                    isLeftChild = true;
+                }
+                else // Title comes after -> check the right child node
+                {
+                    thisNode = thisNode.RightNode;
+                    isLeftChild = false;
+                }
+            }
+
+            if (thisNode == null) // Return if not found
+            {
+                return;
+            }
+
+            // The node is a leaf node -> no children
+            if (thisNode.RightNode == null && thisNode.LeftNode == null)
+            {
+                if (thisNode == null)
+                {
+                    root = null; // Deletes the data
+                }
+                else // The node is a child -> deletes child node
+                {
+                    if (isLeftChild)
+                    {
+                        parent.LeftNode = null; // Deletes data
+                    }
+                    else
+                    {
+                        parent.RightNode = null; // Deletes data
+                    }
+                }
+
+            }
+            else if (thisNode.RightNode == null) // Current node only has a left child
+            {
+                if (thisNode == root)
+                {
+                    root = thisNode.LeftNode;
+                }
+                else
+                {
+                    // Checks which child node it is
+                    if (isLeftChild)
+                    {
+                        parent.LeftNode = thisNode.LeftNode;
+                    }
+                    else
+                    {
+                        parent.RightNode = thisNode.RightNode;
+                    }
+                }
+
+            }
+            else if (thisNode.LeftNode == null) // Current node only has a right child
+            {
+                if (thisNode == root)
+                {
+                    root = thisNode.RightNode;
+                }
+                else
+                {
+                    if (isLeftChild)
+                    {
+                        parent.LeftNode = thisNode.LeftNode;
+                    }
+                    else
+                    {
+                        parent.RightNode = thisNode.RightNode;
+                    }
+                }
+            }
+            else // Current node has both left and right child
+            {
+                TreeNode succesor = GetSuccesor(thisNode);
+
+                if (thisNode == root)
+                {
+                    root = succesor;
+                }
+                else if (isLeftChild)
+                {
+                    parent.LeftNode = succesor;
+                }
+                else
+                {
+                    parent.RightNode = succesor;
+                }
+
+            }
+
+
+        }
+
+        /* Gets the succesor of the current treenode
+         */
+        private TreeNode GetSuccesor(TreeNode node)
+        {
+            TreeNode parent = node;
+            TreeNode succesor = node;
+            TreeNode thisNode = node.RightNode;
+
+            while (thisNode != null)
+            {
+                parent = succesor;
+                succesor = thisNode;
+                thisNode = thisNode.LeftNode;
+            }
+
+            if (succesor != node.RightNode)
+            {
+                parent.LeftNode = succesor.RightNode;
+                succesor.RightNode = node.RightNode;
+            }
+            succesor.LeftNode = node.LeftNode;
+
+            return succesor;
+        }
+
+        /* Traverse the tree in order of nodes
+         */
         public void InOrderTraversal()
         {
             if (root != null)
             {
+                root.TraverseInOrder();
+            }
+        }
 
+        /* Traverse the tree in order Root->left->right
+         */
+        public void PreOrderTraversal()
+        {
+            if (root != null)
+            {
+                root.PreOrderTraversal();
             }
         }
     }
 
-
-    // This entire class needs to be written as a binary search tree
+    /* Main Movie Collection class -> Stores and sorts movies
+     * 
+     * 
+     */
     class MovieCollection
     {
         BinarySearchTree binaryTree = new BinarySearchTree();
-        public void createCollection()
-        {
 
-        }
 
         public void addMovie()
         {
@@ -185,10 +385,10 @@ namespace CAB301
             Console.Write("Classification:"); param6 = Console.ReadLine();
             Console.Write("Release Date:"); param7 = Console.ReadLine();
             Movie newMovie = new Movie();
-            newMovie.add(param1, param2, param3, param4, param5, param6, param7);
+            newMovie.create(param1, param2, param3, param4, param5, param6, param7);
             //this.movieCollection.Add(newMovie);
 
-            binaryTree.add(newMovie);
+            binaryTree.Add(newMovie);
 
             binaryTree.Find(newMovie).PrintInfo();
 
@@ -201,18 +401,61 @@ namespace CAB301
         public void removeMovie()
         {
             Console.WriteLine("--------Remove DVD----------");
+
+            // TODO: Display List of Movie Names to remove
+            
+            Movie thisMovie = new Movie();
+            binaryTree.Remove(thisMovie);  // Deletes the movie
         }
 
         public void displayAllMovies()
         {
-            
+            binaryTree.InOrderTraversal();
         }
 
         public void listTopTen()
         {
 
         }
-    }
 
-   
+        // Adds 30 Movies to the List
+        public void TestMovies()
+        {
+
+
+            Movie newMovie1 = new Movie();
+            Movie newMovie2 = new Movie();
+            Movie newMovie3 = new Movie();
+            Movie newMovie4 = new Movie();
+            Movie newMovie5 = new Movie();
+            Movie newMovie6 = new Movie();
+            Movie newMovie7 = new Movie();
+            Movie newMovie8 = new Movie();
+            Movie newMovie9 = new Movie();
+            Movie newMovie10 = new Movie();
+
+            newMovie1.create("Star Wars Episode IV: A New Hope", "Harrison Ford", "George Lucas", "125", "Sci-Fi", "M", "1977");
+            newMovie2.create("Star Wars Episode V: Empire Strikes Back", "Harrison Ford", "George Lucas", "127", "Sci-Fi", "M", "1980");
+            newMovie3.create("Star Wars Episode VI: Return of the Jedi", "Harrison Ford", "George Lucas", "136", "Sci-Fi", "M", "1983");
+            newMovie4.create("Star Wars Episode I: The Phantom Menace", "Ewan McGreggor", "George Lucas", "133", "Sci-Fi", "M", "1999");
+            newMovie5.create("Star Wars Episode II: Attack of the Clones", "Ewan McGreggor", "George Lucas", "142", "Sci-Fi", "M", "2002");
+            newMovie6.create("Star Wars Episode III: Revenge of the Sith", "Ewan McGreggor", "George Lucas", "140", "Sci-Fi", "M", "2005");
+            newMovie7.create("Star Wars Episode VII: The Force Awakens", "Daisy Ridley", "J.J. Abrams", "135", "Sci-Fi", "M", "2015");
+            newMovie8.create("Star Wars Episode VIII: The Last Jedi", "Daisy Ridley", "Rian Johnson", "152", "Sci-Fi", "M", "2017");
+            newMovie9.create("Star Wars Episode IX: The Rise of Skywalker", "Daisy Ridley", "J.J. Abrams", "142", "Sci-Fi", "M", "2019");
+
+
+            binaryTree.Add(newMovie1);
+            binaryTree.Add(newMovie2);
+            binaryTree.Add(newMovie3);
+            binaryTree.Add(newMovie4);
+            binaryTree.Add(newMovie5);
+            binaryTree.Add(newMovie6);
+            binaryTree.Add(newMovie7);
+            binaryTree.Add(newMovie8);
+            binaryTree.Add(newMovie9);
+
+        }
+    }
 }
+

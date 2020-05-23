@@ -45,8 +45,8 @@ namespace CAB301
             //Console.WriteLine("Array Size: " + memberCollection.Length);
         }
 
-        /*
-         * Finds the registered members phone number
+        /* Finds the registered members phone number
+         * 
          * Required*
          */
         public void contactNum(Member member)
@@ -55,11 +55,10 @@ namespace CAB301
 
         }
 
-        /* 
-         * Prints all the current stored members info
+        /*  Prints all the current stored members info
+         * 
          * Testing only -- broken
          */
-
         public void printAllMembersInfo()
         {
             foreach (Member m in memberCollection)

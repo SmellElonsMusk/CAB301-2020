@@ -22,7 +22,7 @@ namespace CAB301
         /* 
          * Creates a new movie 
          */
-        public void add(string title, string starring, string director, string duration, string genre, string classification, string releaseDate)
+        public void create(string title, string starring, string director, string duration, string genre, string classification, string releaseDate)
         {
             this.title = title;
             this.starring = starring;

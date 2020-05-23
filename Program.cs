@@ -6,29 +6,24 @@ namespace CAB301
 {
     class Program
     {
+        MemberCollection memberCollection = new MemberCollection();
+        BinarySearchTree movieList = new BinarySearchTree();
         static void Main(string[] args)
         {
 
             MovieCollection movieCollection = new MovieCollection(); // Initliase The class
             MemberCollection memberCollection = new MemberCollection(); // initliases memberCollection Class
+            BinarySearchTree movieList = new BinarySearchTree();
 
-            movieCollection.createCollection(); // Creates the list
-            MainMenu(movieCollection, memberCollection);
+            TestCode();
 
-
-
-
-            /* Testing code 
-             * Build  Add movies and members
-             */
-
+            //MainMenu(movieCollection, memberCollection);
+            
         }
 
-
-
-
-
-
+        /*Main Menu 
+         * 
+         */
         public static void MainMenu(MovieCollection movieCollection, MemberCollection memberCollection)
         {
             Console.WriteLine("Welcome to the Community Library");
@@ -53,62 +48,9 @@ namespace CAB301
             else { Console.WriteLine("Please enter a valid Number"); }
 
         }
-
-        // Login Page
-
-        public static void staffLogin()
-        {
-            bool succesful = false;
-            string input1;
-            string input2;
-
-            while (succesful == false)
-            {
-                Console.Write("Enter Username: "); input1 = Console.ReadLine();
-                Console.Write("Enter Password: "); input2 = Console.ReadLine();
-                if (input1 == "staff" && input2 == "123")
-                {
-                    succesful = true;
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine("Login failed. Please try again.");
-                    succesful = false;
-                }
-            }
-        }
-
-        public static void memberLogin()
-        {
-
-            // Probably need to add a method that checks if the member list has any members
-            // check if the username exits, then if not throw an error. If member exists must 
-            // use correct password - if not keep looping
-
-            bool succesful = false;
-            string input1;
-            string input2;
-
-            // Testing code for now
-            while (succesful == false)
-            {
-                Console.Write("Enter Username: "); input1 = Console.ReadLine();
-                Console.Write("Enter Password: "); input2 = Console.ReadLine();
-                if (input1 == "member" && input2 == "123")
-                {
-                    succesful = true;
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine("Login failed. Please try again.");
-                    succesful = false;
-                }
-            }
-        }
-
-
+        /* Menu Item Selections
+         * Sub Menus
+         */
         public static void MenuItem(int mainMenuSelection, MovieCollection movieCollection, MemberCollection memberCollection)
         {
             if (mainMenuSelection == 0)
@@ -162,7 +104,8 @@ namespace CAB301
             }
             else { Console.WriteLine("Please enter a valid Number"); }
         }
-
+        /* Menu Do action
+         */
         public static void Do(int menu, int selection, MovieCollection movieCollection, MemberCollection memberCollection)
         {
 
@@ -186,8 +129,8 @@ namespace CAB301
                             {
                                 movieCollection.addMovie();
                                 Console.WriteLine("----------------------------");
-                                
-                                
+
+
 
                             }
                             break;
@@ -219,7 +162,9 @@ namespace CAB301
                     switch (selection)
                     {
                         case 1: // Add what to do
-                            Console.WriteLine("Member Menu Option 1");
+                            Console.WriteLine("Current Movies:");
+                            movieCollection.TestMovies();
+                            movieCollection.displayAllMovies();
                             break;
                         case 2:
                             Console.WriteLine("Member Menu Option 2");
@@ -237,5 +182,123 @@ namespace CAB301
                     break;
             }
         }
+       
+        /* Staff Login Page
+         */
+        public static void staffLogin()
+        {
+            bool succesful = false;
+            string input1;
+            string input2;
+
+            while (succesful == false)
+            {
+                Console.Write("Enter Username: "); input1 = Console.ReadLine();
+                Console.Write("Enter Password: "); input2 = Console.ReadLine();
+                if (input1 == "staff" && input2 == "123")
+                {
+                    succesful = true;
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Login failed. Please try again.");
+                    succesful = false;
+                }
+            }
+        }
+
+        /* Member Login Page
+         */
+        public static void memberLogin()
+        {
+
+            // Probably need to add a method that checks if the member list has any members
+            // check if the username exits, then if not throw an error. If member exists must 
+            // use correct password - if not keep looping
+
+            bool succesful = false;
+            string input1;
+            string input2;
+
+            // Testing code for now
+            while (succesful == false)
+            {
+                Console.Write("Enter Username: "); input1 = Console.ReadLine();
+                Console.Write("Enter Password: "); input2 = Console.ReadLine();
+                if (input1 == "member" && input2 == "123")
+                {
+                    succesful = true;
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Login failed. Please try again.");
+                    succesful = false;
+                }
+            }
+        }
+
+        /* Testing code 
+         * Build  Add movies and members
+         */
+        public static void TestCode()
+        {
+            
+
+            Movie newMovie1 = new Movie();
+            Movie newMovie2 = new Movie();
+            Movie newMovie3 = new Movie();
+            Movie newMovie4 = new Movie();
+            Movie newMovie5 = new Movie();
+            Movie newMovie6 = new Movie();
+            Movie newMovie7 = new Movie();
+            Movie newMovie8 = new Movie();
+            Movie newMovie9 = new Movie();
+            Movie newMovie10 = new Movie();
+
+
+            // Test Alphabetical Sorting
+
+            //newMovie1.create("A", "Harrison Ford", "George Lucas", "125", "Sci-Fi", "M", "1977");
+            //newMovie2.create("B", "Harrison Ford", "George Lucas", "127", "Sci-Fi", "M", "1980");
+            //newMovie3.create("C", "Harrison Ford", "George Lucas", "136", "Sci-Fi", "M", "1983");
+            //newMovie4.create("D", "Ewan McGreggor", "George Lucas", "133", "Sci-Fi", "M", "1999");
+            //newMovie5.create("E", "Ewan McGreggor", "George Lucas", "142", "Sci-Fi", "M", "2002");
+            //newMovie6.create("F", "Ewan McGreggor", "George Lucas", "140", "Sci-Fi", "M", "2005");
+            //newMovie7.create("G", "Daisy Ridley", "J.J. Abrams", "135", "Sci-Fi", "M", "2015");
+            //newMovie8.create("H", "Daisy Ridley", "Rian Johnson", "152", "Sci-Fi", "M", "2017");
+            //newMovie9.create("I", "Daisy Ridley", "J.J. Abrams", "142", "Sci-Fi", "M", "2019");
+
+
+            newMovie1.create("Star Wars Episode IV: A New Hope", "Harrison Ford", "George Lucas", "125", "Sci-Fi", "M", "1977");
+            newMovie2.create("Star Wars Episode V: Empire Strikes Back", "Harrison Ford", "George Lucas", "127", "Sci-Fi", "M", "1980");
+            newMovie3.create("Star Wars Episode VI: Return of the Jedi", "Harrison Ford", "George Lucas", "136", "Sci-Fi", "M", "1983");
+            newMovie4.create("Star Wars Episode I: The Phantom Menace", "Ewan McGreggor", "George Lucas", "133", "Sci-Fi", "M", "1999");
+            newMovie5.create("Star Wars Episode II: Attack of the Clones", "Ewan McGreggor", "George Lucas", "142", "Sci-Fi", "M", "2002");
+            newMovie6.create("Star Wars Episode III: Revenge of the Sith", "Ewan McGreggor", "George Lucas", "140", "Sci-Fi", "M", "2005");
+            newMovie7.create("Star Wars Episode VII: The Force Awakens", "Daisy Ridley", "J.J. Abrams", "135", "Sci-Fi", "M", "2015");
+            newMovie8.create("Star Wars Episode VIII: The Last Jedi", "Daisy Ridley", "Rian Johnson", "152", "Sci-Fi", "M", "2017");
+            newMovie9.create("Star Wars Episode IX: The Rise of Skywalker", "Daisy Ridley", "J.J. Abrams", "142", "Sci-Fi", "M", "2019");
+
+            BinarySearchTree movieList = new BinarySearchTree();
+
+            movieList.Add(newMovie1);
+            movieList.Add(newMovie2);
+            movieList.Add(newMovie3);
+            movieList.Add(newMovie4);
+            movieList.Add(newMovie5);
+            movieList.Add(newMovie6);
+            movieList.Add(newMovie7);
+            movieList.Add(newMovie8);
+            movieList.Add(newMovie9);
+
+            movieList.Add(newMovie1);
+            Console.WriteLine("In Order: ");
+            movieList.InOrderTraversal();
+            Console.WriteLine("Pre Order: ");
+            movieList.PreOrderTraversal();
+        }
     }
+
 }

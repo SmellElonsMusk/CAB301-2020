@@ -4,6 +4,14 @@ using System.Text;
 
 namespace CAB301
 {
+    /* Enum for Red/Black Tree
+     */
+    enum Colour
+    {
+        Red,
+        Black
+    }
+
     /* TreeNode Class
     * 
     */
@@ -12,6 +20,9 @@ namespace CAB301
         private Movie data;
         private TreeNode rightNode;
         private TreeNode leftNode;
+
+        private TreeNode parentNode;
+        public Colour colour;
 
         public Movie Data()
         {
@@ -22,6 +33,20 @@ namespace CAB301
          */
         public TreeNode(Movie movie)
         {
+            this.data = movie;
+        }
+
+        /* Assigns TreeNode Colour
+         */
+        public TreeNode(Colour colour)
+        {
+            this.colour = colour;
+        }
+        /* Assigns TreeNode Colour & Movie
+         */
+        public TreeNode(Colour colour, Movie movie)
+        {
+            this.colour = colour;
             this.data = movie;
         }
 
@@ -41,6 +66,20 @@ namespace CAB301
             set { leftNode = value; }
         }
 
+        /* Rotate Node Left
+         */ // unfinished -> autoballance tree
+        public void leftRotate(TreeNode node)
+        {
+            TreeNode otherNode = node.rightNode; // Set TreeNode
+            node.rightNode = otherNode.leftNode; // swap the left and right sides
+        }
+
+        /* Rotate Node Right
+         */ // unfinished -> autoballance tree
+         public void rotateRight(TreeNode node)
+        {
+
+        }
 
         /* Adds new node down the tree when it finds an empty spot
          * 
@@ -107,7 +146,6 @@ namespace CAB301
 
         }
 
-
         /* Checks the height of the current tree -- Needs to be re written a bit
          * -> Number of levels 
          */
@@ -151,13 +189,13 @@ namespace CAB301
                 leftNode.TraverseInOrder();
 
             }
-
+            Console.WriteLine(data.ToString());
             if (rightNode != null)
             {
                 rightNode.TraverseInOrder();
             }
 
-            Console.WriteLine(data.ToString());
+            
         }
 
         /* Searches Tree
@@ -178,8 +216,8 @@ namespace CAB301
             }
         }
 
-        /* Searches the tree 
-         *  left -> right-> root
+        /* Searches the tree (Alphabetically)
+         *  left -> Root-> right
          */
         public void PostOrderTraversal()
         {
@@ -187,12 +225,13 @@ namespace CAB301
             {
                 leftNode.PostOrderTraversal();
             }
-
+            Console.WriteLine(data);
             if (rightNode != null)
             {
                 rightNode.PostOrderTraversal();
             }
-            Console.WriteLine(data);
+            
+
         }
 
         /* Prints the movie info to the screen
@@ -231,21 +270,6 @@ namespace CAB301
                 return null;
             }
         }
-
-        /* Find a movie in the array based on title
-         */
-        public Movie FindMovie(String title)
-        {
-            if (root.Data().getTitle() == title)
-            {
-                return root.Data();
-            }
-            else
-            {
-                return null;
-            }
-
-        } // Needs To be fixed
 
         /* Adds a new Node
          */
@@ -473,33 +497,25 @@ namespace CAB301
             Console.Write("Release Date:"); param7 = Console.ReadLine();
             Movie newMovie = new Movie();
             newMovie.create(param1, param2, param3, param4, param5, param6, param7);
-            //this.movieCollection.Add(newMovie);
-
-            binaryTree.Add(newMovie);
-
-            binaryTree.Find(newMovie).PrintInfo();
-
-
-            // testing Code
-            //Console.WriteLine("The Movie has been created: " + this.movieCollection.ToString());
-
+            binaryTree.Add(newMovie);                     
         }
 
         public void removeMovie()
         {
             Console.WriteLine("--------Remove DVD----------");
-            
+
             // TODO: Display List of Movie Names to remove
             binaryTree.PostOrderTraversal();
             //binaryTree.PreOrderTraversal();
 
             Console.WriteLine("Enter the Movie Title: ");
             string input = Console.ReadLine();
+
+
+
             if (binaryTree.FindMovie(input).getTitle() == input)
             {
-                Movie movie = new Movie();
-                movie = (binaryTree.FindMovie(input));
-                binaryTree.Remove(movie);
+                binaryTree.Remove(binaryTree.FindMovie(input));
             }
 
             //Movie thisMovie = new Movie();
@@ -513,6 +529,7 @@ namespace CAB301
 
         public void listTopTen()
         {
+
 
         }
 
@@ -553,6 +570,8 @@ namespace CAB301
             binaryTree.Add(newMovie9);
 
         }
+
+        
     }
 }
 

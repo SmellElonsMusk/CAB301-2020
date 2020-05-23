@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -68,5 +69,50 @@ namespace CAB301
         }
 
 
+        public void registerTest()
+        {
+            // Loops Through as members are registered
+
+            Member newMember1 = new Member();
+            newMember1.register("Ella", "Truelove", "10 Silver St", 0415123094, 1234);
+            memberCollection[size] = newMember1;
+            size += 1;
+            Array.Resize<Member>(ref memberCollection, memberCollection.Length + 1);
+            //newMember1.printinfo();
+
+            Member newMember2 = new Member();
+            newMember2.register("James", "Bond", "12 Redbank Rd", 0415123094, 4321);
+            memberCollection[size] = newMember2;
+            size += 1;
+            Array.Resize<Member>(ref memberCollection, memberCollection.Length + 1);
+            //newMember2.printinfo();
+
+            Member newMember3 = new Member();
+            newMember3.register("Beckie", "Lin", "12 Brisbane Rd", 0415123094, 4321);
+            memberCollection[size] = newMember3;
+            size += 1;
+            Array.Resize<Member>(ref memberCollection, memberCollection.Length + 1);
+            //newMember3.printinfo();
+
+            //Console.WriteLine(memberCollection.Length);
+
+
+
+        }
+
+        public int GetSize()
+        {
+            return size;
+        }
+        
+        public Member returnMember(int i)
+        {
+            return memberCollection[i];
+        }
+
+        public Member[] returnArray()
+        {
+            return memberCollection;
+        }
     }
 }

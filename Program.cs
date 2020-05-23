@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection.Metadata.Ecma335;
 
@@ -15,10 +17,12 @@ namespace CAB301
             MemberCollection memberCollection = new MemberCollection(); // initliases memberCollection Class
             BinarySearchTree movieList = new BinarySearchTree();
 
-            TestCode();
+            //TestCodeMovie();
+            memberCollection.registerTest();
+            //memberLogin(memberCollection);
+            //TestCodeMember(memberCollection);
+            MainMenu(movieCollection, memberCollection);
 
-            //MainMenu(movieCollection, memberCollection);
-            
         }
 
         /*Main Menu 
@@ -77,7 +81,7 @@ namespace CAB301
                         break;
 
                     case 2:
-                        memberLogin();
+                        memberLogin(memberCollection);
                         Console.Clear();
                         Console.WriteLine("--------Member Menu---------");
                         Console.WriteLine("1. Display all movies");
@@ -124,12 +128,22 @@ namespace CAB301
                     switch (selection)
                     {
                         case 1: // Add a new movie DVD
-                            // TODO: needs more work
-                            while (repeatMenu == true)
+                                // TODO: needs more work
+                            while (repeatMenu)
                             {
                                 movieCollection.addMovie();
                                 Console.WriteLine("----------------------------");
+                                Console.WriteLine("Please make a selection (1, or 0 to return to previous menu): ");
 
+                                if (Console.ReadLine() == "1")
+                                {
+                                    repeatMenu = true;
+                                } else
+                                {
+                                    repeatMenu = false;
+                                    Console.Clear();
+                                    MainMenu(movieCollection, memberCollection);
+                                }
 
 
                             }
@@ -138,7 +152,7 @@ namespace CAB301
                             movieCollection.TestMovies();
                             movieCollection.removeMovie();
                             Console.WriteLine("----------------------------");
-                            
+
                             Console.WriteLine("Please Make a selection (1, or 0 to return to main menu):");
                             break;
                         case 3: // Add a new member
@@ -152,7 +166,7 @@ namespace CAB301
                         case 4:
                             Console.WriteLine("Staff Menu Option 4");
                             break;
-                    } 
+                    }
                     break;
 
                 case 2: // Member Menu
@@ -166,6 +180,17 @@ namespace CAB301
                             Console.WriteLine("Current Movies:");
                             movieCollection.TestMovies();
                             movieCollection.displayAllMovies();
+
+                            Console.WriteLine("----------------------------");
+                            Console.WriteLine("Please press 0 to return to previous menu: ");
+
+                            if (Console.ReadLine() == "0")
+                            {
+                                Console.Clear();
+                                MainMenu(movieCollection, memberCollection);
+                            }
+                            
+
                             break;
                         case 2:
                             Console.WriteLine("Member Menu Option 2");
@@ -183,9 +208,9 @@ namespace CAB301
                     break;
             }
         }
-       
+
         /* Staff Login Page
-         */
+         */ // Finished
         public static void staffLogin()
         {
             bool succesful = false;
@@ -210,8 +235,8 @@ namespace CAB301
         }
 
         /* Member Login Page
-         */
-        public static void memberLogin()
+         */ // Finished
+        public static void memberLogin(MemberCollection memberCollection)
         {
 
             // Probably need to add a method that checks if the member list has any members
@@ -221,16 +246,28 @@ namespace CAB301
             bool succesful = false;
             string input1;
             string input2;
+            string[] usernames = new string[10];
+            int[] passwords = new int[10];
+
+            for (int i = 0; i < memberCollection.GetSize(); i++)
+            {
+                Member member = memberCollection.returnArray()[i];
+                usernames[i] = member.getUsername();
+                passwords[i] = member.getPassword();
+            }
+
 
             // Testing code for now
             while (succesful == false)
             {
                 Console.Write("Enter Username: "); input1 = Console.ReadLine();
                 Console.Write("Enter Password: "); input2 = Console.ReadLine();
-                if (input1 == "member" && input2 == "123")
+
+                if (usernames.Contains(input1) && passwords.Contains(Int32.Parse(input2)))
                 {
                     succesful = true;
                 }
+
                 else
                 {
                     Console.Clear();
@@ -243,9 +280,9 @@ namespace CAB301
         /* Testing code 
          * Build  Add movies and members
          */
-        public static void TestCode()
+        public static void TestCodeMovie()
         {
-            
+
 
             Movie newMovie1 = new Movie();
             Movie newMovie2 = new Movie();
@@ -299,10 +336,12 @@ namespace CAB301
 
 
             // Test Sorting
-            Console.WriteLine("In Order: ");
+            Console.WriteLine("InOrder: ");
             movieList.InOrderTraversal();
-            Console.WriteLine("Pre Order: ");
+            Console.WriteLine("PreOrder: ");
             movieList.PreOrderTraversal();
+            Console.WriteLine("PostOrder: ");
+            movieList.PostOrderTraversal();
 
             // Test Deletion
             Console.WriteLine("Delete Movie Test: ");
@@ -315,13 +354,30 @@ namespace CAB301
 
             Console.WriteLine("The current Height of the tree is: " + movieList.Height());
 
-            Console.WriteLine("Enter Movie Name: ");
-            Movie chosen = new Movie();
-            chosen = movieList.FindMovie(Console.ReadLine());
+            // Console.WriteLine("Enter Movie Name: ");
+            //Movie chosen = new Movie();
+            //chosen = movieList.FindMovie(Console.ReadLine());
 
-            Console.WriteLine("The Chosen Movie is: " );
+            //Console.WriteLine("The Chosen Movie is: " );
 
 
+        }
+
+        /* Testing code 
+         * Build  Add movies and members
+         */
+        public static void TestCodeMember(MemberCollection memberCollection)
+        {
+            //MemberCollection memberCollection = new MemberCollection();
+            //memberCollection.registerTest();
+
+            Console.WriteLine("Username and Password Test: ");
+            for (int i = 0; i < memberCollection.GetSize(); i++)
+            {
+                Console.Write("Username :"); Console.WriteLine(memberCollection.returnMember(i).getUsername());
+                Console.Write("Password :"); Console.WriteLine(memberCollection.returnMember(i).getPassword());
+
+            }
         }
     }
 

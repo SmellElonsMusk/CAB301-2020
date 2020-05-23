@@ -64,7 +64,8 @@ namespace CAB301
             Console.WriteLine("Lastname : " + lastName);
             Console.WriteLine("Username : " + username);
             Console.WriteLine("Password : " + password);
-            Console.ReadKey();
+            Console.WriteLine("");
+            
         }
 
     }

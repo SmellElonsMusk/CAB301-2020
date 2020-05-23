@@ -19,8 +19,8 @@ namespace CAB301
         private int copies;
         private int borrowedCount;
 
-        /* 
-         * Creates a new movie 
+        /* Creates a new movie 
+         * 
          */
         public void create(string title, string starring, string director, string duration, string genre, string classification, string releaseDate)
         {
@@ -34,16 +34,14 @@ namespace CAB301
         }
 
         // Removes a single copy of the movie from the movie object
-
         public void removeCopies()
         {
             this.copies -= 1;
         }
 
-        /*
-         * Lists number of current copies of this movie object
+        /*  Lists number of current copies of this movie object
+         *
          */
-
         public int currentCopies()
         {
             return copies;

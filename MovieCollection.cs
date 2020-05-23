@@ -52,7 +52,7 @@ namespace CAB301
         public void Add(Movie movie)
         {
             // If the new movies title comes after the current title -> insert to the right node
-            if (String.Compare(movie.getTitle(), data.getTitle()) <= 0)
+            if (String.CompareOrdinal(movie.getTitle(), data.getTitle()) <= 0)
             {
 
                 if (rightNode == null)
@@ -82,7 +82,7 @@ namespace CAB301
          * 
          * 
          */
-        public TreeNode Find(Movie movie) 
+        public TreeNode Find(Movie movie)
         {
             TreeNode currentNode = this;
 
@@ -92,7 +92,7 @@ namespace CAB301
                 {
                     return currentNode;
                 }
-                else if (String.Compare(movie.getTitle(), currentNode.data.getTitle()) > 0) // If the Title appears after current
+                else if (String.CompareOrdinal(movie.getTitle(), currentNode.data.getTitle()) > 0) // If the Title appears after current
                 {
                     currentNode = currentNode.rightNode;
                 }
@@ -104,6 +104,39 @@ namespace CAB301
 
             }
             return null; // if the node does not exist
+
+        }
+
+
+        /* Checks the height of the current tree -- Needs to be re written a bit
+         * -> Number of levels 
+         */
+        public int Height()
+        {
+            //return 1 when leaf node is found
+            if (this.leftNode == null && this.rightNode == null)
+            {
+                return 1; //found a leaf node
+            }
+
+            int left = 0;
+            int right = 0;
+
+            //recursively go through each branch
+            if (this.leftNode != null)
+                left = this.leftNode.Height();
+            if (this.rightNode != null)
+                right = this.rightNode.Height();
+
+            //return the greater height of the branch
+            if (left > right)
+            {
+                return (left + 1);
+            }
+            else
+            {
+                return (right + 1);
+            }
 
         }
 
@@ -145,13 +178,29 @@ namespace CAB301
             }
         }
 
+        /* Searches the tree 
+         *  left -> right-> root
+         */
+        public void PostOrderTraversal()
+        {
+            if (leftNode != null)
+            {
+                leftNode.PostOrderTraversal();
+            }
+
+            if (rightNode != null)
+            {
+                rightNode.PostOrderTraversal();
+            }
+            Console.WriteLine(data);
+        }
+
         /* Prints the movie info to the screen
          */
         public void PrintInfo()
         {
             Console.WriteLine(data.ToString());
         }
-
     }
 
     /* Binary Search Tree Main Class
@@ -182,6 +231,21 @@ namespace CAB301
                 return null;
             }
         }
+
+        /* Find a movie in the array based on title
+         */
+        public Movie FindMovie(String title)
+        {
+            if (root.Data().getTitle() == title)
+            {
+                return root.Data();
+            }
+            else
+            {
+                return null;
+            }
+
+        } // Needs To be fixed
 
         /* Adds a new Node
          */
@@ -341,6 +405,18 @@ namespace CAB301
             return succesor;
         }
 
+        /* Returns the height of the tree
+         */
+        public int Height()
+        {
+            if (root == null)
+            {
+                return 0;
+            }
+
+            return root.Height();
+        }
+
         /* Traverse the tree in order of nodes
          */
         public void InOrderTraversal()
@@ -358,6 +434,17 @@ namespace CAB301
             if (root != null)
             {
                 root.PreOrderTraversal();
+            }
+        }
+
+        /* Searches the tree 
+         *  left -> right-> root
+         */
+        public void PostOrderTraversal()
+        {
+            if (root != null)
+            {
+                root.PostOrderTraversal();
             }
         }
     }
@@ -401,16 +488,27 @@ namespace CAB301
         public void removeMovie()
         {
             Console.WriteLine("--------Remove DVD----------");
-
-            // TODO: Display List of Movie Names to remove
             
-            Movie thisMovie = new Movie();
-            binaryTree.Remove(thisMovie);  // Deletes the movie
-        }
+            // TODO: Display List of Movie Names to remove
+            binaryTree.PostOrderTraversal();
+            //binaryTree.PreOrderTraversal();
+
+            Console.WriteLine("Enter the Movie Title: ");
+            string input = Console.ReadLine();
+            if (binaryTree.FindMovie(input).getTitle() == input)
+            {
+                Movie movie = new Movie();
+                movie = (binaryTree.FindMovie(input));
+                binaryTree.Remove(movie);
+            }
+
+            //Movie thisMovie = new Movie();
+            //binaryTree.Remove(thisMovie);  // Deletes the movie
+        } // Needs to be fixed
 
         public void displayAllMovies()
         {
-            binaryTree.InOrderTraversal();
+            binaryTree.PostOrderTraversal();
         }
 
         public void listTopTen()
@@ -432,7 +530,6 @@ namespace CAB301
             Movie newMovie7 = new Movie();
             Movie newMovie8 = new Movie();
             Movie newMovie9 = new Movie();
-            Movie newMovie10 = new Movie();
 
             newMovie1.create("Star Wars Episode IV: A New Hope", "Harrison Ford", "George Lucas", "125", "Sci-Fi", "M", "1977");
             newMovie2.create("Star Wars Episode V: Empire Strikes Back", "Harrison Ford", "George Lucas", "127", "Sci-Fi", "M", "1980");

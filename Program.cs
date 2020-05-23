@@ -135,9 +135,10 @@ namespace CAB301
                             }
                             break;
                         case 2: // Remove a movie DVD
+                            movieCollection.TestMovies();
                             movieCollection.removeMovie();
                             Console.WriteLine("----------------------------");
-                            Console.WriteLine("1. Add Another");
+                            
                             Console.WriteLine("Please Make a selection (1, or 0 to return to main menu):");
                             break;
                         case 3: // Add a new member
@@ -151,7 +152,7 @@ namespace CAB301
                         case 4:
                             Console.WriteLine("Staff Menu Option 4");
                             break;
-                    }
+                    } 
                     break;
 
                 case 2: // Member Menu
@@ -293,11 +294,34 @@ namespace CAB301
             movieList.Add(newMovie8);
             movieList.Add(newMovie9);
 
-            movieList.Add(newMovie1);
+            // Test Height:
+            Console.WriteLine("The current Height of the tree is: " + movieList.Height());
+
+
+            // Test Sorting
             Console.WriteLine("In Order: ");
             movieList.InOrderTraversal();
             Console.WriteLine("Pre Order: ");
             movieList.PreOrderTraversal();
+
+            // Test Deletion
+            Console.WriteLine("Delete Movie Test: ");
+            movieList.Remove(newMovie7);
+            movieList.Remove(newMovie4);
+            movieList.Remove(newMovie5);
+            movieList.Remove(newMovie6);
+            movieList.Remove(newMovie7);
+            movieList.PreOrderTraversal();
+
+            Console.WriteLine("The current Height of the tree is: " + movieList.Height());
+
+            Console.WriteLine("Enter Movie Name: ");
+            Movie chosen = new Movie();
+            chosen = movieList.FindMovie(Console.ReadLine());
+
+            Console.WriteLine("The Chosen Movie is: " );
+
+
         }
     }
 

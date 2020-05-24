@@ -13,22 +13,17 @@ namespace CAB301
 
 
         /* Registers a new member and adds it to the current array
-         */
+         */ // Finsihed -> Works
         public void register()
         {
             // Create new member object
             Member newMember = new Member();
-
-            // Get user input
 
             string firstName;
             string lastName;
             string homeAddress;
             int phoneNumber;
             int password;
-
-            // Testing Code
-            //Console.WriteLine("Array Size: " + memberCollection.Length);
 
             Console.WriteLine("---------Add Member---------");
             Console.Write("First Name: "); firstName = Console.ReadLine();
@@ -41,19 +36,31 @@ namespace CAB301
             memberCollection[size] = newMember;
             size += 1;
             Array.Resize<Member>(ref memberCollection, memberCollection.Length + 1);
-            newMember.printinfo();
-            // Testing code
-            //Console.WriteLine("Array Size: " + memberCollection.Length);
+
         }
 
         /* Finds the registered members phone number
          * 
          * Required*
-         */
-        public void contactNum(Member member)
+         */ // Needs to be Fixed
+        public void FindMember()
         {
-            member.getNumber();
-
+            string firstName;
+            string lastName;
+            Console.WriteLine("--------Find Member---------");
+            Console.Write("First Name: "); firstName = Console.ReadLine();
+            Console.Write("Last Name: "); lastName = Console.ReadLine();
+            Console.WriteLine("----------------------------");
+            foreach (Member member in memberCollection)
+            {
+                if (member.getFirst() == firstName && member.getLast() == lastName)
+                {
+                    Console.Clear();
+                    Console.WriteLine(firstName + " " + lastName + "'s phone number is: " + member.getNumber());
+                    Console.WriteLine("----------------------------");
+                    break;
+                }
+            }
         }
 
         /*  Prints all the current stored members info
@@ -104,7 +111,7 @@ namespace CAB301
         {
             return size;
         }
-        
+
         public Member returnMember(int i)
         {
             return memberCollection[i];

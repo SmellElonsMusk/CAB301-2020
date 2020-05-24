@@ -41,14 +41,15 @@ namespace CAB301
         public TreeNode(Colour colour)
         {
             this.colour = colour;
-        }
+        } // Red/black
+
         /* Assigns TreeNode Colour & Movie
          */
         public TreeNode(Colour colour, Movie movie)
         {
             this.colour = colour;
             this.data = movie;
-        }
+        } // Red Black
 
         /* Right Child Node
          */
@@ -76,10 +77,10 @@ namespace CAB301
 
         /* Rotate Node Right
          */ // unfinished -> autoballance tree
-         public void rotateRight(TreeNode node)
+        public void rotateRight(TreeNode node)
         {
 
-        }
+        } 
 
         /* Adds new node down the tree when it finds an empty spot
          * 
@@ -146,6 +147,62 @@ namespace CAB301
 
         }
 
+        /* Finds the node storing the movie
+         * 
+         * 
+         */
+        public TreeNode FindMovie1(string title)
+        {
+            TreeNode currentNode = this;
+
+            while (currentNode != null)
+            {
+                if (currentNode.data.getTitle() == title) // If the title matches the current Node
+                {
+                    return this;
+                }
+                else if (String.CompareOrdinal(title, currentNode.data.getTitle()) > 0) // If the Title appears after current
+                {
+                    currentNode = currentNode.rightNode;
+                }
+                else // If the Title appears before current 
+                {
+                    currentNode = currentNode.leftNode;
+                }
+
+
+            }
+            return null; // if the node does not exist
+
+        } // doesn't work
+
+        public TreeNode Search(string title, TreeNode node)
+        {
+            if (node != null)
+            {
+                if (node.data.getTitle().Equals(title))
+                {
+                    return node;
+                }
+                else
+                {
+                    TreeNode nextNode = Search(title, node.leftNode); // Goes to the left node of current
+                    if (nextNode == null)
+                    {
+                        nextNode = Search(title, node.rightNode); // Goes to the right node of current
+                    }
+                    return nextNode;
+                }
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+
+
         /* Checks the height of the current tree -- Needs to be re written a bit
          * -> Number of levels 
          */
@@ -195,7 +252,7 @@ namespace CAB301
                 rightNode.TraverseInOrder();
             }
 
-            
+
         }
 
         /* Searches Tree
@@ -230,7 +287,7 @@ namespace CAB301
             {
                 rightNode.PostOrderTraversal();
             }
-            
+
 
         }
 
@@ -264,6 +321,24 @@ namespace CAB301
             if (root != null)
             {
                 return root.Find(movie);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /* Find the desired Movie based on title
+         * 
+         */
+        public TreeNode FindMovie(string title)
+        {
+            if (root != null)
+            {
+
+                return root.Search(title, root);
+                
+
             }
             else
             {
@@ -482,7 +557,7 @@ namespace CAB301
         BinarySearchTree binaryTree = new BinarySearchTree();
 
 
-        public void addMovie()
+        public void addMovie() // needs more work -> needs to match the DEMO
         {
             // Input Paramaters
             String param1, param2, param3, param4, param5, param6, param7;
@@ -495,9 +570,13 @@ namespace CAB301
             Console.Write("Genre:"); param5 = Console.ReadLine();
             Console.Write("Classification:"); param6 = Console.ReadLine();
             Console.Write("Release Date:"); param7 = Console.ReadLine();
+            Console.WriteLine("----------------------------");
+
+            // Add Code to check if movie already exists, if so add another num to the count
+
             Movie newMovie = new Movie();
             newMovie.create(param1, param2, param3, param4, param5, param6, param7);
-            binaryTree.Add(newMovie);                     
+            binaryTree.Add(newMovie);
         }
 
         public void removeMovie()
@@ -511,12 +590,15 @@ namespace CAB301
             Console.WriteLine("Enter the Movie Title: ");
             string input = Console.ReadLine();
 
+            binaryTree.FindMovie(input).Data();
+
+            Console.WriteLine("The Movie to Delete is: " + binaryTree.FindMovie(input).Data().getTitle());
+            binaryTree.Remove(binaryTree.FindMovie(input).Data());
+            binaryTree.PostOrderTraversal();
 
 
-            if (binaryTree.FindMovie(input).getTitle() == input)
-            {
-                binaryTree.Remove(binaryTree.FindMovie(input));
-            }
+
+
 
             //Movie thisMovie = new Movie();
             //binaryTree.Remove(thisMovie);  // Deletes the movie
@@ -571,7 +653,7 @@ namespace CAB301
 
         }
 
-        
+
     }
 }
 

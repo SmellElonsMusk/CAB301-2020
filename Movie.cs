@@ -7,6 +7,18 @@ using System.Text;
 
 namespace CAB301
 {
+
+    enum Genre
+    {
+        Drama,
+        Adventure,
+        Family,
+        Action,
+        Sci-Fi,
+        Comedy,
+        Thriller
+    }
+
     class Movie
     {
         private string title;
@@ -18,6 +30,7 @@ namespace CAB301
         private string releaseDate;
         private int copies;
         private int borrowedCount;
+        private bool isBorrowed;
 
         /* Creates a new movie 
          * 
@@ -31,6 +44,8 @@ namespace CAB301
             this.genre = genre;
             this.classification = classification;
             this.releaseDate = releaseDate;
+
+            this.copies = 1; // creates inital copy
         }
 
         // Removes a single copy of the movie from the movie object

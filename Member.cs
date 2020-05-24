@@ -23,13 +23,23 @@ namespace CAB301
             this.lastName = lastName;
             this.homeAddress = homeAddress;
             this.phoneNumber = phoneNumber;
-            this.username = firstName + lastName;
+            this.username = lastName+firstName;
             this.password = password;
         }
 
         public string getName()
         {
             return firstName + lastName;
+        }
+
+        public string getFirst()
+        {
+            return firstName;
+        }
+
+        public string getLast()
+        {
+            return lastName;
         }
 
         public int getNumber()
@@ -67,6 +77,5 @@ namespace CAB301
             Console.WriteLine("");
             
         }
-
     }
 }

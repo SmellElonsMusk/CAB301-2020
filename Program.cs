@@ -128,17 +128,21 @@ namespace CAB301
                     switch (selection)
                     {
                         case 1: // Add a new movie DVD
-                                // TODO: needs more work
                             while (repeatMenu)
                             {
                                 movieCollection.addMovie();
+                                Console.Clear();
+                                Console.WriteLine("----------Add DVD-----------");
+                                Console.WriteLine("1. Add Another Movie ");
                                 Console.WriteLine("----------------------------");
+
                                 Console.WriteLine("Please make a selection (1, or 0 to return to previous menu): ");
 
                                 if (Console.ReadLine() == "1")
                                 {
                                     repeatMenu = true;
-                                } else
+                                }
+                                else
                                 {
                                     repeatMenu = false;
                                     Console.Clear();
@@ -149,22 +153,72 @@ namespace CAB301
                             }
                             break;
                         case 2: // Remove a movie DVD
-                            movieCollection.TestMovies();
-                            movieCollection.removeMovie();
-                            Console.WriteLine("----------------------------");
+                            while (repeatMenu)
+                            {
+                                movieCollection.TestMovies();
+                                movieCollection.removeMovie();
+                                //Console.Clear();
+                                Console.WriteLine("--------Remove DVD----------");
+                                Console.WriteLine("1. Remove Another Movie ");
+                                Console.WriteLine("----------------------------");
+                                Console.WriteLine("Please Make a selection (1, or 0 to return to main menu):");
 
-                            Console.WriteLine("Please Make a selection (1, or 0 to return to main menu):");
+                                if (Console.ReadLine() == "1")
+                                {
+                                    repeatMenu = true;
+                                }
+                                else
+                                {
+                                    repeatMenu = false;
+                                    Console.Clear();
+                                    MainMenu(movieCollection, memberCollection);
+                                }
+                            }
+
                             break;
                         case 3: // Add a new member
+                            while (repeatMenu)
+                            {
+                                memberCollection.register();
+                                Console.Clear();
+                                Console.WriteLine("---------Add Member---------");
+                                Console.WriteLine("1. Add Another Member ");
+                                Console.WriteLine("----------------------------");
+                                Console.WriteLine("Please make a selection (1, or 0 to return to previous menu): ");
 
-                            memberCollection.register();
-                            //memberCollection.printAllMembersInfo();
-
-                            // add some testing code to see if member was created successfully
-
+                                if (Console.ReadLine() == "1")
+                                {
+                                    repeatMenu = true;
+                                }
+                                else
+                                {
+                                    repeatMenu = false;
+                                    Console.Clear();
+                                    MainMenu(movieCollection, memberCollection);
+                                }
+                            }
                             break;
-                        case 4:
-                            Console.WriteLine("Staff Menu Option 4");
+                        case 4: // Find Member's Phone Number
+                            while (repeatMenu)
+                            {
+                                memberCollection.FindMember();
+                                
+                                Console.WriteLine("--------Find Member---------");
+                                Console.WriteLine("1. Find Another Member ");
+                                Console.WriteLine("----------------------------");
+                                Console.WriteLine("Please make a selection (1, or 0 to return to previous menu): ");
+
+                                if (Console.ReadLine() == "1")
+                                {
+                                    repeatMenu = true;
+                                }
+                                else
+                                {
+                                    repeatMenu = false;
+                                    Console.Clear();
+                                    MainMenu(movieCollection, memberCollection);
+                                }
+                            }
                             break;
                     }
                     break;
@@ -176,7 +230,7 @@ namespace CAB301
                     }
                     switch (selection)
                     {
-                        case 1: // Add what to do
+                        case 1: // List DVD's
                             Console.WriteLine("Current Movies:");
                             movieCollection.TestMovies();
                             movieCollection.displayAllMovies();
@@ -189,19 +243,17 @@ namespace CAB301
                                 Console.Clear();
                                 MainMenu(movieCollection, memberCollection);
                             }
-                            
-
                             break;
-                        case 2:
+                        case 2: // Borrow a DVD
                             Console.WriteLine("Member Menu Option 2");
                             break;
-                        case 3:
+                        case 3: // Return a DVD
                             Console.WriteLine("Member Menu Option 3");
                             break;
-                        case 4:
+                        case 4: // List Current Borrowed DVD's
                             Console.WriteLine("Member Menu Option 4");
                             break;
-                        case 5:
+                        case 5: // Display Top 10 Most Borrowed DVD's
                             Console.WriteLine("Member Menu Option 5");
                             break;
                     }
@@ -221,7 +273,7 @@ namespace CAB301
             {
                 Console.Write("Enter Username: "); input1 = Console.ReadLine();
                 Console.Write("Enter Password: "); input2 = Console.ReadLine();
-                if (input1 == "staff" && input2 == "123")
+                if (input1 == "staff" && input2 == "today123")
                 {
                     succesful = true;
                 }

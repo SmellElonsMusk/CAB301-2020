@@ -19,6 +19,7 @@ namespace CAB301
 
             //TestCodeMovie();
             memberCollection.registerTest();
+            movieCollection.TestMovies();
             //memberLogin(memberCollection);
             //TestCodeMember(memberCollection);
             MainMenu(movieCollection, memberCollection);
@@ -155,7 +156,6 @@ namespace CAB301
                         case 2: // Remove a movie DVD
                             while (repeatMenu)
                             {
-                                movieCollection.TestMovies();
                                 movieCollection.removeMovie();
                                 //Console.Clear();
                                 Console.WriteLine("--------Remove DVD----------");
@@ -232,7 +232,6 @@ namespace CAB301
                     {
                         case 1: // List DVD's
                             Console.WriteLine("Current Movies:");
-                            movieCollection.TestMovies();
                             movieCollection.displayAllMovies();
 
                             Console.WriteLine("----------------------------");
@@ -361,15 +360,15 @@ namespace CAB301
             //newMovie9.create("I", "Daisy Ridley", "J.J. Abrams", "142", "Sci-Fi", "M", "2019");
 
 
-            newMovie1.create("Star Wars Episode IV: A New Hope", "Harrison Ford", "George Lucas", "125", "Sci-Fi", "M", "1977");
-            newMovie2.create("Star Wars Episode V: Empire Strikes Back", "Harrison Ford", "George Lucas", "127", "Sci-Fi", "M", "1980");
-            newMovie3.create("Star Wars Episode VI: Return of the Jedi", "Harrison Ford", "George Lucas", "136", "Sci-Fi", "M", "1983");
-            newMovie4.create("Star Wars Episode I: The Phantom Menace", "Ewan McGreggor", "George Lucas", "133", "Sci-Fi", "M", "1999");
-            newMovie5.create("Star Wars Episode II: Attack of the Clones", "Ewan McGreggor", "George Lucas", "142", "Sci-Fi", "M", "2002");
-            newMovie6.create("Star Wars Episode III: Revenge of the Sith", "Ewan McGreggor", "George Lucas", "140", "Sci-Fi", "M", "2005");
-            newMovie7.create("Star Wars Episode VII: The Force Awakens", "Daisy Ridley", "J.J. Abrams", "135", "Sci-Fi", "M", "2015");
-            newMovie8.create("Star Wars Episode VIII: The Last Jedi", "Daisy Ridley", "Rian Johnson", "152", "Sci-Fi", "M", "2017");
-            newMovie9.create("Star Wars Episode IX: The Rise of Skywalker", "Daisy Ridley", "J.J. Abrams", "142", "Sci-Fi", "M", "2019");
+            newMovie1.create("Star Wars Episode IV: A New Hope", "Harrison Ford", "George Lucas", "125", Genre.SciFi, Classification.M, "1977",2);
+            newMovie2.create("Star Wars Episode V: Empire Strikes Back", "Harrison Ford", "George Lucas", "127", Genre.SciFi, Classification.M, "1980",3);
+            newMovie3.create("Star Wars Episode VI: Return of the Jedi", "Harrison Ford", "George Lucas", "136", Genre.SciFi, Classification.M, "1983",5);
+            newMovie4.create("Star Wars Episode I: The Phantom Menace", "Ewan McGreggor", "George Lucas", "133", Genre.SciFi, Classification.M, "1999",2);
+            newMovie5.create("Star Wars Episode II: Attack of the Clones", "Ewan McGreggor", "George Lucas", "142", Genre.SciFi, Classification.M, "2002",1);
+            newMovie6.create("Star Wars Episode III: Revenge of the Sith", "Ewan McGreggor", "George Lucas", "140", Genre.SciFi, Classification.M, "2005",4);
+            newMovie7.create("Star Wars Episode VII: The Force Awakens", "Daisy Ridley", "J.J. Abrams", "135", Genre.SciFi, Classification.M, "2015",2);
+            newMovie8.create("Star Wars Episode VIII: The Last Jedi", "Daisy Ridley", "Rian Johnson", "152", Genre.SciFi, Classification.M, "2017",2);
+            newMovie9.create("Star Wars Episode IX: The Rise of Skywalker", "Daisy Ridley", "J.J. Abrams", "142", Genre.SciFi, Classification.M, "2019",1);
 
             BinarySearchTree movieList = new BinarySearchTree();
 

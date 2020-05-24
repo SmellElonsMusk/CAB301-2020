@@ -7,8 +7,28 @@ using System.Text;
 
 namespace CAB301
 {
+    enum Genre
+    {
+        Drama,
+        Adventure,
+        Family,
+        Action,
+        SciFi,
+        Comedy,
+        Animated,
+        Thriller,
+        Other
+    }
 
-    
+    enum Classification
+    {
+        G,
+        PG,
+        M,
+        MA15
+    }
+
+
 
     class Movie
     {
@@ -16,8 +36,8 @@ namespace CAB301
         private string starring;
         private string director;
         private string duration;
-        private string genre;
-        private string classification;
+        private Genre genre;
+        private Classification classification;
         private string releaseDate;
         private int copies;
         private int borrowedCount;
@@ -26,7 +46,7 @@ namespace CAB301
         /* Creates a new movie 
          * 
          */
-        public void create(string title, string starring, string director, string duration, string genre, string classification, string releaseDate)
+        public void create(string title, string starring, string director, string duration, Genre genre, Classification classification, string releaseDate, int copies)
         {
             this.title = title;
             this.starring = starring;
@@ -35,8 +55,14 @@ namespace CAB301
             this.genre = genre;
             this.classification = classification;
             this.releaseDate = releaseDate;
+            this.copies = copies;
 
             this.copies = 1; // creates inital copy
+        }
+
+        public void AddCopies()
+        {
+            this.copies += 1;
         }
 
         // Removes a single copy of the movie from the movie object
@@ -60,7 +86,7 @@ namespace CAB301
 
         public override string ToString()
         {
-            return title + " " + starring + " " + director + " " + duration + " " + genre + " " + classification + " " + releaseDate;
+            return title + " " + starring + " " + director + " " + duration + " " + genre + " " + classification + " " + releaseDate + " " + copies;
         }
 
     }

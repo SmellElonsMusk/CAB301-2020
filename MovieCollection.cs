@@ -560,23 +560,80 @@ namespace CAB301
         public void addMovie() // needs more work -> needs to match the DEMO
         {
             // Input Paramaters
-            String param1, param2, param3, param4, param5, param6, param7;
+            string param1, param2, param3, param4, param7;
+            int param5, param6, param8;
 
             Console.WriteLine("----------Add DVD-----------");
-            Console.Write("Title:"); param1 = Console.ReadLine();
-            Console.Write("Starring:"); param2 = Console.ReadLine();
-            Console.Write("Director:"); param3 = Console.ReadLine();
-            Console.Write("Duration:"); param4 = Console.ReadLine();
-            Console.Write("Genre:"); param5 = Console.ReadLine();
-            Console.Write("Classification:"); param6 = Console.ReadLine();
-            Console.Write("Release Date:"); param7 = Console.ReadLine();
-            Console.WriteLine("----------------------------");
+            Console.Write("Enter Title:"); param1 = Console.ReadLine();
 
-            // Add Code to check if movie already exists, if so add another num to the count
+            
+            if (binaryTree.FindMovie(param1).Data().getTitle() == param1)
+            {
+                Console.Write("Enter the Number of Copies:"); param8 = Int32.Parse(Console.ReadLine());
+                binaryTree.FindMovie(param1).Data().AddCopies();
+                
+                
+            } else
+            {
+                Console.Write("Enter the Starring Actor(s):"); param2 = Console.ReadLine();
+                Console.Write("Enter the Director(s):"); param3 = Console.ReadLine();
+                Console.Write("Enter the Duration(mins):"); param4 = Console.ReadLine();
 
-            Movie newMovie = new Movie();
-            newMovie.create(param1, param2, param3, param4, param5, param6, param7);
-            binaryTree.Add(newMovie);
+                // Select a Genre from the Enum List
+                Console.Write("Select the Genre:");
+                int num = 1;
+                foreach (string str in Enum.GetNames(typeof(Genre)))
+                {
+
+                    Console.WriteLine(num + ". " + str);
+                    num += 1;
+                } // Print out the list
+                param5 = Int32.Parse(Console.ReadLine());
+                Genre thisGenre = Genre.Other;
+                int sel = 0;
+                foreach (Genre genre in Enum.GetValues(typeof(Genre)))
+                {
+
+                    sel += 1;
+
+                    if (sel == param5)
+                    {
+                        thisGenre = genre;
+                    }
+                } // Make selection from list
+
+
+                Console.Write("Select the Classification:");
+                num = 1;
+                foreach (string str in Enum.GetNames(typeof(Classification)))
+                {
+                    Console.WriteLine(num + ". " + str);
+                    num += 1;
+                } // Print out the list
+                param6 = Int32.Parse(Console.ReadLine());
+                Classification thisClassification = Classification.G;
+                int sel2 = 0;
+                foreach (Classification classification in Enum.GetValues(typeof(Classification)))
+                {
+
+                    sel2 += 1;
+
+                    if (sel2 == param5)
+                    {
+                        thisClassification = classification;
+                    }
+                } // Make selection from list
+
+                Console.Write("Enter the Release Date:"); param7 = Console.ReadLine();
+                Console.Write("Enter the Number of Copies:"); param8 = Int32.Parse(Console.ReadLine());
+                Console.WriteLine("----------------------------");
+
+                // Add Code to check if movie already exists, if so add another num to the count
+
+                Movie newMovie = new Movie();
+                newMovie.create(param1, param2, param3, param4, thisGenre, thisClassification, param7, param8);
+                binaryTree.Add(newMovie);
+            }
         }
 
         public void removeMovie()
@@ -630,15 +687,15 @@ namespace CAB301
             Movie newMovie8 = new Movie();
             Movie newMovie9 = new Movie();
 
-            newMovie1.create("Star Wars Episode IV: A New Hope", "Harrison Ford", "George Lucas", "125", "Sci-Fi", "M", "1977");
-            newMovie2.create("Star Wars Episode V: Empire Strikes Back", "Harrison Ford", "George Lucas", "127", "Sci-Fi", "M", "1980");
-            newMovie3.create("Star Wars Episode VI: Return of the Jedi", "Harrison Ford", "George Lucas", "136", "Sci-Fi", "M", "1983");
-            newMovie4.create("Star Wars Episode I: The Phantom Menace", "Ewan McGreggor", "George Lucas", "133", "Sci-Fi", "M", "1999");
-            newMovie5.create("Star Wars Episode II: Attack of the Clones", "Ewan McGreggor", "George Lucas", "142", "Sci-Fi", "M", "2002");
-            newMovie6.create("Star Wars Episode III: Revenge of the Sith", "Ewan McGreggor", "George Lucas", "140", "Sci-Fi", "M", "2005");
-            newMovie7.create("Star Wars Episode VII: The Force Awakens", "Daisy Ridley", "J.J. Abrams", "135", "Sci-Fi", "M", "2015");
-            newMovie8.create("Star Wars Episode VIII: The Last Jedi", "Daisy Ridley", "Rian Johnson", "152", "Sci-Fi", "M", "2017");
-            newMovie9.create("Star Wars Episode IX: The Rise of Skywalker", "Daisy Ridley", "J.J. Abrams", "142", "Sci-Fi", "M", "2019");
+            newMovie1.create("Star Wars Episode IV: A New Hope", "Harrison Ford", "George Lucas", "125", Genre.SciFi, Classification.M, "1977", 2);
+            newMovie2.create("Star Wars Episode V: Empire Strikes Back", "Harrison Ford", "George Lucas", "127", Genre.SciFi, Classification.M, "1980", 3);
+            newMovie3.create("Star Wars Episode VI: Return of the Jedi", "Harrison Ford", "George Lucas", "136", Genre.SciFi, Classification.M, "1983", 5);
+            newMovie4.create("Star Wars Episode I: The Phantom Menace", "Ewan McGreggor", "George Lucas", "133", Genre.SciFi, Classification.M, "1999", 2);
+            newMovie5.create("Star Wars Episode II: Attack of the Clones", "Ewan McGreggor", "George Lucas", "142", Genre.SciFi, Classification.M, "2002", 1);
+            newMovie6.create("Star Wars Episode III: Revenge of the Sith", "Ewan McGreggor", "George Lucas", "140", Genre.SciFi, Classification.M, "2005", 4);
+            newMovie7.create("Star Wars Episode VII: The Force Awakens", "Daisy Ridley", "J.J. Abrams", "135", Genre.SciFi, Classification.M, "2015", 2);
+            newMovie8.create("Star Wars Episode VIII: The Last Jedi", "Daisy Ridley", "Rian Johnson", "152", Genre.SciFi, Classification.M, "2017", 2);
+            newMovie9.create("Star Wars Episode IX: The Rise of Skywalker", "Daisy Ridley", "J.J. Abrams", "142", Genre.SciFi, Classification.M, "2019", 1);
 
 
             binaryTree.Add(newMovie1);
@@ -652,7 +709,6 @@ namespace CAB301
             binaryTree.Add(newMovie9);
 
         }
-
 
     }
 }

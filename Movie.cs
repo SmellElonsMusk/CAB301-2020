@@ -8,16 +8,7 @@ using System.Text;
 namespace CAB301
 {
 
-    enum Genre
-    {
-        Drama,
-        Adventure,
-        Family,
-        Action,
-        Sci-Fi,
-        Comedy,
-        Thriller
-    }
+    
 
     class Movie
     {

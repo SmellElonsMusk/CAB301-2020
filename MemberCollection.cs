@@ -34,8 +34,12 @@ namespace CAB301
 
             newMember.register(firstName, lastName, homeAddress, phoneNumber, password);
             memberCollection[size] = newMember;
+            Console.WriteLine("The following user was registered: " + memberCollection[size].getFirst() + " " + memberCollection[size].getLast());
             size += 1;
             Array.Resize<Member>(ref memberCollection, memberCollection.Length + 1);
+            Console.ReadLine();
+
+            
 
         }
 
@@ -51,16 +55,90 @@ namespace CAB301
             Console.Write("First Name: "); firstName = Console.ReadLine();
             Console.Write("Last Name: "); lastName = Console.ReadLine();
             Console.WriteLine("----------------------------");
+
+
             foreach (Member member in memberCollection)
             {
-                if (member.getFirst() == firstName && member.getLast() == lastName)
+
+                try
                 {
-                    Console.Clear();
-                    Console.WriteLine(firstName + " " + lastName + "'s phone number is: " + member.getNumber());
-                    Console.WriteLine("----------------------------");
-                    break;
+                    if (member.getFirst() == firstName && member.getLast() == lastName)
+                    {
+                        Console.Clear();
+                        Console.WriteLine(firstName + " " + lastName + "'s phone number is: " + member.getNumber());
+                        Console.WriteLine("----------------------------");
+                    }
+                }
+                catch (NullReferenceException)
+                {
+                    Console.WriteLine("Member not found. Press any key try again.");
+                    Console.ReadLine();
+                    //FindMember();
+                }
+                break;
+            }
+        }
+
+        public Member FindMember(string userName)
+        {
+            foreach (Member member in memberCollection)
+            {
+
+                try
+                {
+                    if (member.getUsername() == userName)
+                    {
+                        Console.WriteLine("Username not found: " + member.getUsername());
+                        return member;
+                        
+                    }
+                }
+                catch (NullReferenceException )
+                {
+                    Console.WriteLine("Username not found: " + member.getUsername() );
+                }
+                break;
+            }
+
+            return null;
+        }
+
+        public void BorrowMovie(string userName, Movie movie)
+        {
+
+            foreach (Member member in memberCollection)
+            {
+                if (member.getUsername() == userName)
+                {
+                    member.borrowMovie(movie);
+                    movie.borrow();
+                    Console.WriteLine("The movie :" + movie.getTitle() + " has been borrwed: " + movie.BorrowedCount());
+                }
+                 else
+                {
+                    
                 }
             }
+            
+
+                //member.borrowMovie(movie);
+               
+
+            //Console.WriteLine(movie.BorrowedCount());
+            //Console.ReadLine();
+
+
+
+        }
+
+        public void ReturnMovie(Movie movie, Member member)
+        {
+            
+        }
+
+        public void ListHeld()
+        {
+
         }
 
         /*  Prints all the current stored members info

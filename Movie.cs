@@ -57,18 +57,30 @@ namespace CAB301
             this.releaseDate = releaseDate;
             this.copies = copies;
 
-            this.copies = 1; // creates inital copy
         }
 
-        public void AddCopies()
+        public void AddCopies(int num)
         {
-            this.copies += 1;
+            for (int i = 0; i < num; i++) {
+                this.copies += 1;
+            }
+            
         }
 
         // Removes a single copy of the movie from the movie object
         public void removeCopies()
         {
             this.copies -= 1;
+        }
+
+        public void borrow()
+        {
+            this.borrowedCount += 1;
+        }
+
+        public int BorrowedCount()
+        {
+            return borrowedCount;
         }
 
         /*  Lists number of current copies of this movie object

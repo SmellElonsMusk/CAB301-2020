@@ -80,7 +80,7 @@ namespace CAB301
         public void rotateRight(TreeNode node)
         {
 
-        } 
+        }
 
         /* Adds new node down the tree when it finds an empty spot
          * 
@@ -92,7 +92,7 @@ namespace CAB301
         public void Add(Movie movie)
         {
             // If the new movies title comes after the current title -> insert to the right node
-            if (String.CompareOrdinal(movie.getTitle(), data.getTitle()) <= 0)
+            if (String.CompareOrdinal(movie.getTitle(), data.getTitle()) >= 0)
             {
 
                 if (rightNode == null)
@@ -239,17 +239,17 @@ namespace CAB301
          * Left->Root->Right Nodes recursively of each subtree 
          * Sorted Alphabetically
          */
-        public void TraverseInOrder()
+        public void InOrderTraverse()
         {
             if (leftNode != null)
             {
-                leftNode.TraverseInOrder();
+                leftNode.InOrderTraverse();
 
             }
-            Console.WriteLine(data.ToString());
+            Console.WriteLine(data.getTitle());
             if (rightNode != null)
             {
-                rightNode.TraverseInOrder();
+                rightNode.InOrderTraverse();
             }
 
 
@@ -260,7 +260,7 @@ namespace CAB301
          */
         public void PreOrderTraversal()
         {
-            Console.WriteLine(data.ToString());
+            Console.WriteLine(data);
 
             if (leftNode != null)
             {
@@ -273,8 +273,8 @@ namespace CAB301
             }
         }
 
-        /* Searches the tree (Alphabetically)
-         *  left -> Root-> right
+        /* Searches the tree 
+         *  left -> right-> root
          */
         public void PostOrderTraversal()
         {
@@ -282,11 +282,13 @@ namespace CAB301
             {
                 leftNode.PostOrderTraversal();
             }
-            Console.WriteLine(data);
+
             if (rightNode != null)
             {
                 rightNode.PostOrderTraversal();
             }
+
+            Console.WriteLine(data.getTitle());
 
 
         }
@@ -337,7 +339,7 @@ namespace CAB301
             {
 
                 return root.Search(title, root);
-                
+
 
             }
             else
@@ -522,7 +524,7 @@ namespace CAB301
         {
             if (root != null)
             {
-                root.TraverseInOrder();
+                root.InOrderTraverse();
             }
         }
 
@@ -556,8 +558,9 @@ namespace CAB301
     {
         BinarySearchTree binaryTree = new BinarySearchTree();
 
-
-        public void addMovie() // needs more work -> needs to match the DEMO
+        /* Adds Movie to BST and checks if  it already exists
+         */
+        public void addMovie() // Finished 
         {
             // Input Paramaters
             string param1, param2, param3, param4, param7;
@@ -566,29 +569,58 @@ namespace CAB301
             Console.WriteLine("----------Add DVD-----------");
             Console.Write("Enter Title:"); param1 = Console.ReadLine();
 
-            
-            if (binaryTree.FindMovie(param1).Data().getTitle() == param1)
+            // Checks if the current title already exists
+            string title = "";
+            try // attempts to find title
+            {
+                title = binaryTree.FindMovie(param1).Data().getTitle();
+            }
+            catch (NullReferenceException )  // if the result is null, exception is thrown and caught
+            {
+                // Does nothing
+            }
+
+            // If the title exists, add more copies
+            if (title == param1)
             {
                 Console.Write("Enter the Number of Copies:"); param8 = Int32.Parse(Console.ReadLine());
-                binaryTree.FindMovie(param1).Data().AddCopies();
-                
-                
-            } else
+
+                binaryTree.FindMovie(param1).Data().AddCopies(param8);
+
+
+            }
+            else // Continue adding more params
             {
                 Console.Write("Enter the Starring Actor(s):"); param2 = Console.ReadLine();
                 Console.Write("Enter the Director(s):"); param3 = Console.ReadLine();
                 Console.Write("Enter the Duration(mins):"); param4 = Console.ReadLine();
 
                 // Select a Genre from the Enum List
-                Console.Write("Select the Genre:");
+                Console.WriteLine("Select the Genre:");
                 int num = 1;
                 foreach (string str in Enum.GetNames(typeof(Genre)))
                 {
 
                     Console.WriteLine(num + ". " + str);
                     num += 1;
-                } // Print out the list
-                param5 = Int32.Parse(Console.ReadLine());
+                }
+
+                // Checks if the selection is a valid int
+                bool isNum = Int32.TryParse(Console.ReadLine(), out param5);
+
+                // Checks if input is a number
+                while (!isNum)
+                {
+                    Console.WriteLine("Please enter a vailid number: ");
+                    param5 = Int32.Parse(Console.ReadLine());
+
+                    if (param5 < Enum.GetNames(typeof(Genre)).Length) // checks if the value is within range
+                    {
+                        isNum = true;
+                    }
+                }
+
+                // Assigns Genre
                 Genre thisGenre = Genre.Other;
                 int sel = 0;
                 foreach (Genre genre in Enum.GetValues(typeof(Genre)))
@@ -598,19 +630,40 @@ namespace CAB301
 
                     if (sel == param5)
                     {
+
                         thisGenre = genre;
+
+
+
                     }
-                } // Make selection from list
+                }
 
 
-                Console.Write("Select the Classification:");
+                // Select a Classification from the Enum List
+                Console.WriteLine("Select the Classification:");
                 num = 1;
                 foreach (string str in Enum.GetNames(typeof(Classification)))
                 {
                     Console.WriteLine(num + ". " + str);
                     num += 1;
-                } // Print out the list
-                param6 = Int32.Parse(Console.ReadLine());
+                }
+
+                // Checks if the selection is a valid int
+                isNum = Int32.TryParse(Console.ReadLine(), out param6);
+
+                // Checks if input is a number
+                while (!isNum)
+                {
+                    Console.WriteLine("Please enter a vailid number: ");
+                    param6 = Int32.Parse(Console.ReadLine());
+
+                    if (param6 < Enum.GetNames(typeof(Classification)).Length) // checks if the value is within range
+                    {
+                        isNum = true;
+                    }
+                }
+
+                // Assigns Classification
                 Classification thisClassification = Classification.G;
                 int sel2 = 0;
                 foreach (Classification classification in Enum.GetValues(typeof(Classification)))
@@ -622,61 +675,91 @@ namespace CAB301
                     {
                         thisClassification = classification;
                     }
-                } // Make selection from list
+                }
 
+                // Adds String Params
                 Console.Write("Enter the Release Date:"); param7 = Console.ReadLine();
                 Console.Write("Enter the Number of Copies:"); param8 = Int32.Parse(Console.ReadLine());
                 Console.WriteLine("----------------------------");
 
-                // Add Code to check if movie already exists, if so add another num to the count
-
+                // Creates new movie and adds to BST
                 Movie newMovie = new Movie();
                 newMovie.create(param1, param2, param3, param4, thisGenre, thisClassification, param7, param8);
                 binaryTree.Add(newMovie);
             }
         }
 
-        public void removeMovie()
+        /* Removes Movie from BST by title
+         */
+        public void removeMovie() // Finished 
         {
             Console.WriteLine("--------Remove DVD----------");
 
-            // TODO: Display List of Movie Names to remove
-            binaryTree.PostOrderTraversal();
-            //binaryTree.PreOrderTraversal();
-
+            // Lists Current Movies
+            binaryTree.InOrderTraversal();
+            Console.WriteLine("----------------------------");
+            // Gets user input for title
             Console.WriteLine("Enter the Movie Title: ");
             string input = Console.ReadLine();
 
-            binaryTree.FindMovie(input).Data();
+            // Checks if the title exists
+            bool success = false;
+            while (!success)
+            {
+                try
+                {
+                    binaryTree.FindMovie(input).Data();
+                    success = true;
+                }
+                catch (NullReferenceException ) // Title not found. Repeats the process
+                {
+                    Console.WriteLine("----------------------------");
+                    Console.WriteLine("The Movie: " + input + " does not exist.");
+                    Console.Write("Please enter a valid title: ");
+                    input = Console.ReadLine();
+                }
+            }
 
-            Console.WriteLine("The Movie to Delete is: " + binaryTree.FindMovie(input).Data().getTitle());
+            // Once the movie is found, deletes the movie
+            Console.WriteLine("The Movie: " + binaryTree.FindMovie(input).Data().getTitle() + " has been deleted.");
+            Console.WriteLine("----------------------------");
             binaryTree.Remove(binaryTree.FindMovie(input).Data());
-            binaryTree.PostOrderTraversal();
-
-
-
-
-
-            //Movie thisMovie = new Movie();
-            //binaryTree.Remove(thisMovie);  // Deletes the movie
-        } // Needs to be fixed
-
-        public void displayAllMovies()
-        {
-            binaryTree.PostOrderTraversal();
+            
         }
 
-        public void listTopTen()
+        public Movie findMovie(string title)
         {
-
-
+            try
+            {
+                return binaryTree.FindMovie(title).Data();
+            } catch (NullReferenceException )
+            {
+                // do nothing
+            }
+            return null;
         }
 
-        // Adds 30 Movies to the List
-        public void TestMovies()
+        /* Prints all current Movie Titles to the Console
+         */
+        public void displayAllMovies() // Finished 
+        {
+            binaryTree.InOrderTraversal();
+        }
+
+        /* Lists Top 10 Most Rented Movies
+         */
+        public void listTopTen() // NOT finsihed -> Needs to be implmented 
         {
 
 
+        } 
+
+        /* Adds 15 Movies to the List
+         */
+        public void AddMovies() // Finished 
+        {
+
+            // Creates movie objects
             Movie newMovie1 = new Movie();
             Movie newMovie2 = new Movie();
             Movie newMovie3 = new Movie();
@@ -686,7 +769,14 @@ namespace CAB301
             Movie newMovie7 = new Movie();
             Movie newMovie8 = new Movie();
             Movie newMovie9 = new Movie();
+            Movie newMovie10 = new Movie();
+            Movie newMovie11 = new Movie();
+            Movie newMovie12 = new Movie();
+            Movie newMovie13 = new Movie();
+            Movie newMovie14 = new Movie();
+            Movie newMovie15 = new Movie();
 
+            // Adds details to movie objects
             newMovie1.create("Star Wars Episode IV: A New Hope", "Harrison Ford", "George Lucas", "125", Genre.SciFi, Classification.M, "1977", 2);
             newMovie2.create("Star Wars Episode V: Empire Strikes Back", "Harrison Ford", "George Lucas", "127", Genre.SciFi, Classification.M, "1980", 3);
             newMovie3.create("Star Wars Episode VI: Return of the Jedi", "Harrison Ford", "George Lucas", "136", Genre.SciFi, Classification.M, "1983", 5);
@@ -696,8 +786,14 @@ namespace CAB301
             newMovie7.create("Star Wars Episode VII: The Force Awakens", "Daisy Ridley", "J.J. Abrams", "135", Genre.SciFi, Classification.M, "2015", 2);
             newMovie8.create("Star Wars Episode VIII: The Last Jedi", "Daisy Ridley", "Rian Johnson", "152", Genre.SciFi, Classification.M, "2017", 2);
             newMovie9.create("Star Wars Episode IX: The Rise of Skywalker", "Daisy Ridley", "J.J. Abrams", "142", Genre.SciFi, Classification.M, "2019", 1);
+            newMovie10.create("Iron Man", "Robert Downey Jr.", "Jon Favereau", "126", Genre.Action, Classification.M, "2008", 4);
+            newMovie11.create("Thor: Ragnarok", "Chris Hemsworth", "Taika Waititi", "130", Genre.Action, Classification.M, "2017", 2);
+            newMovie12.create("Avengers", "Chris Hemsworth", "Joss Whedon", "142", Genre.Action, Classification.M, "2012", 4);
+            newMovie13.create("Avengers: Age of Ultron", "Chris Evans, Robert Downey J.r", "Joss Whedon", "141", Genre.Action, Classification.M, "2015", 2);
+            newMovie14.create("Avengers: Infinity War", "Chris Hemsworth, Robert Downey J.r", "Joe Russo, Anthoiny Russo", "149", Genre.Action, Classification.M, "2018", 3);
+            newMovie15.create("Avegers: End Game", "Chris Hemsworth, Robert Downey J.r", "Joe Russo, Anthoiny Russo", "181", Genre.Action, Classification.M, "", 2);
 
-
+            // Adds movies to the BSS
             binaryTree.Add(newMovie1);
             binaryTree.Add(newMovie2);
             binaryTree.Add(newMovie3);
@@ -707,8 +803,14 @@ namespace CAB301
             binaryTree.Add(newMovie7);
             binaryTree.Add(newMovie8);
             binaryTree.Add(newMovie9);
+            binaryTree.Add(newMovie10);
+            binaryTree.Add(newMovie11);
+            binaryTree.Add(newMovie12);
+            binaryTree.Add(newMovie13);
+            binaryTree.Add(newMovie14);
+            binaryTree.Add(newMovie15);
 
-        }
+        } 
 
     }
 }

@@ -14,7 +14,9 @@ namespace CAB301
         private int phoneNumber;
         private string username;
         private int password;
-        private Movie[] moviesBorrowed;
+        
+        private Movie[] moviesBorrowed = new Movie[1];
+        private int numMovies;
 
         //
         public void register(string firstName, string lastName, string homeAddress, int phoneNumber, int password)
@@ -25,6 +27,8 @@ namespace CAB301
             this.phoneNumber = phoneNumber;
             this.username = lastName+firstName;
             this.password = password;
+            this.numMovies = 0;
+            this.moviesBorrowed = new Movie[1];
         }
 
         public string getName()
@@ -65,6 +69,17 @@ namespace CAB301
         public int getPassword()
         {
             return password;
+        }
+
+        public void borrowMovie(Movie movie )
+        {
+            numMovies += 1;
+            this.moviesBorrowed[numMovies] = movie;
+        }
+
+        public Movie[] currentlyHeld()
+        {
+            return moviesBorrowed;
         }
 
         public void printinfo()

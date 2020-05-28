@@ -6,10 +6,23 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace CAB301
 {
+    /// <summary>
+    /// CAB301: Assignment 1.
+    /// </summary>
+    /// @author: Waldo Fouche, n9950095
+    /// @date: 2020
     class Program
     {
+        /* Intialises Member and Movie collection classes
+         * 
+         */
         MemberCollection memberCollection = new MemberCollection();
         BinarySearchTree movieList = new BinarySearchTree();
+
+        /// <summary>
+        /// Main Program that runs
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
 
@@ -17,19 +30,25 @@ namespace CAB301
             MemberCollection memberCollection = new MemberCollection(); // initliases memberCollection Class
             BinarySearchTree movieList = new BinarySearchTree();
 
+            string userName ="";
+
             //TestCodeMovie();
             memberCollection.registerTest();
-            movieCollection.TestMovies();
-            //memberLogin(memberCollection);
-            //TestCodeMember(memberCollection);
-            MainMenu(movieCollection, memberCollection);
+            //Console.Write("Username: ");
+            //userName = Console.ReadLine();
+
+            //memberCollection.FindMember(userName).printinfo();
+
+            // Adds 15 Movies to the BST
+            movieCollection.AddMovies();
+            MainMenu(movieCollection, memberCollection, userName);
 
         }
 
-        /*Main Menu 
+        /* Main Menu 
          * 
-         */
-        public static void MainMenu(MovieCollection movieCollection, MemberCollection memberCollection)
+         */ // Finished
+        public static void MainMenu(MovieCollection movieCollection, MemberCollection memberCollection, string userName)
         {
             Console.WriteLine("Welcome to the Community Library");
             Console.WriteLine("-----------Main Menu------------");
@@ -48,15 +67,16 @@ namespace CAB301
             if (result)
             {
                 Console.Clear();
-                MenuItem(num, movieCollection, memberCollection);
+                MenuItem(num, movieCollection, memberCollection, userName);
             }
             else { Console.WriteLine("Please enter a valid Number"); }
 
         }
+
         /* Menu Item Selections
          * Sub Menus
-         */
-        public static void MenuItem(int mainMenuSelection, MovieCollection movieCollection, MemberCollection memberCollection)
+         */ // Finished
+        public static void MenuItem(int mainMenuSelection, MovieCollection movieCollection, MemberCollection memberCollection, string userName)
         {
             if (mainMenuSelection == 0)
             {
@@ -82,7 +102,7 @@ namespace CAB301
                         break;
 
                     case 2:
-                        memberLogin(memberCollection);
+                        memberLogin(memberCollection, userName);
                         Console.Clear();
                         Console.WriteLine("--------Member Menu---------");
                         Console.WriteLine("1. Display all movies");
@@ -105,13 +125,14 @@ namespace CAB301
             if (result)
             {
                 Console.Clear();
-                Do(mainMenuSelection, num, movieCollection, memberCollection);
+                Do(mainMenuSelection, num, movieCollection, memberCollection, userName);
             }
             else { Console.WriteLine("Please enter a valid Number"); }
         }
+
         /* Menu Do action
-         */
-        public static void Do(int menu, int selection, MovieCollection movieCollection, MemberCollection memberCollection)
+         */ // NOT Finished -> add member features and display top 10 Movies
+        public static void Do(int menu, int selection, MovieCollection movieCollection, MemberCollection memberCollection, string userName)
         {
 
 
@@ -123,7 +144,7 @@ namespace CAB301
 
                     if (selection == 0)
                     {
-                        MainMenu(movieCollection, memberCollection);
+                        MainMenu(movieCollection, memberCollection, userName);
                     }
 
                     switch (selection)
@@ -147,7 +168,7 @@ namespace CAB301
                                 {
                                     repeatMenu = false;
                                     Console.Clear();
-                                    MainMenu(movieCollection, memberCollection);
+                                    MainMenu(movieCollection, memberCollection, userName);
                                 }
 
 
@@ -171,7 +192,7 @@ namespace CAB301
                                 {
                                     repeatMenu = false;
                                     Console.Clear();
-                                    MainMenu(movieCollection, memberCollection);
+                                    MainMenu(movieCollection, memberCollection, userName);
                                 }
                             }
 
@@ -180,6 +201,7 @@ namespace CAB301
                             while (repeatMenu)
                             {
                                 memberCollection.register();
+
                                 Console.Clear();
                                 Console.WriteLine("---------Add Member---------");
                                 Console.WriteLine("1. Add Another Member ");
@@ -194,7 +216,7 @@ namespace CAB301
                                 {
                                     repeatMenu = false;
                                     Console.Clear();
-                                    MainMenu(movieCollection, memberCollection);
+                                    MainMenu(movieCollection, memberCollection, userName);
                                 }
                             }
                             break;
@@ -216,17 +238,18 @@ namespace CAB301
                                 {
                                     repeatMenu = false;
                                     Console.Clear();
-                                    MainMenu(movieCollection, memberCollection);
+                                    MainMenu(movieCollection, memberCollection, userName);
                                 }
                             }
                             break;
+
                     }
                     break;
 
                 case 2: // Member Menu
                     if (selection == 0)
                     {
-                        MainMenu(movieCollection, memberCollection);
+                        MainMenu(movieCollection, memberCollection, userName);
                     }
                     switch (selection)
                     {
@@ -240,11 +263,31 @@ namespace CAB301
                             if (Console.ReadLine() == "0")
                             {
                                 Console.Clear();
-                                MainMenu(movieCollection, memberCollection);
+                                MainMenu(movieCollection, memberCollection, userName);
                             }
                             break;
                         case 2: // Borrow a DVD
-                            Console.WriteLine("Member Menu Option 2");
+
+                            Console.WriteLine("---------Borrow Movie-----------");
+                            Console.Write("Enter movie title: "); string title = Console.ReadLine();
+
+
+                            memberCollection.BorrowMovie(userName, movieCollection.findMovie(title));
+                                
+                              
+
+                               
+                           
+                            //memberCollection.BorrowMovie(memberCollection.FindMember(userName), movieCollection.findMovie(title));
+                            Console.WriteLine("----------------------------");
+                            Console.WriteLine("Please press 0 to return to previous menu: ");
+
+                            if (Console.ReadLine() == "0")
+                            {
+                                Console.Clear();
+                                MainMenu(movieCollection, memberCollection, userName);
+                            }
+
                             break;
                         case 3: // Return a DVD
                             Console.WriteLine("Member Menu Option 3");
@@ -267,9 +310,10 @@ namespace CAB301
             bool succesful = false;
             string input1;
             string input2;
-
+            Console.WriteLine("----------Staff Login-----------");
             while (succesful == false)
             {
+               
                 Console.Write("Enter Username: "); input1 = Console.ReadLine();
                 Console.Write("Enter Password: "); input2 = Console.ReadLine();
                 if (input1 == "staff" && input2 == "today123")
@@ -280,14 +324,15 @@ namespace CAB301
                 {
                     Console.Clear();
                     Console.WriteLine("Login failed. Please try again.");
+                    
                     succesful = false;
                 }
             }
         }
 
         /* Member Login Page
-         */ // Finished
-        public static void memberLogin(MemberCollection memberCollection)
+         */ // Finished -> kinda needs to select member
+        public static void memberLogin(MemberCollection memberCollection, string userName)
         {
 
             // Probably need to add a method that checks if the member list has any members
@@ -308,14 +353,16 @@ namespace CAB301
             }
 
 
-            // Testing code for now
+            Console.WriteLine("---------Member Login-----------");
             while (succesful == false)
+
             {
                 Console.Write("Enter Username: "); input1 = Console.ReadLine();
                 Console.Write("Enter Password: "); input2 = Console.ReadLine();
 
                 if (usernames.Contains(input1) && passwords.Contains(Int32.Parse(input2)))
                 {
+                    userName = input1;
                     succesful = true;
                 }
 
@@ -323,13 +370,21 @@ namespace CAB301
                 {
                     Console.Clear();
                     Console.WriteLine("Login failed. Please try again.");
+ 
                     succesful = false;
                 }
             }
         }
 
+        // ---------------------------------------------------------------------
+
+        /*  Testing code used to test member and BST without using main menu
+         * 
+         */
+
+
         /* Testing code 
-         * Build  Add movies and members
+         * Build  Add movies and members without using menu
          */
         public static void TestCodeMovie()
         {
@@ -360,15 +415,15 @@ namespace CAB301
             //newMovie9.create("I", "Daisy Ridley", "J.J. Abrams", "142", "Sci-Fi", "M", "2019");
 
 
-            newMovie1.create("Star Wars Episode IV: A New Hope", "Harrison Ford", "George Lucas", "125", Genre.SciFi, Classification.M, "1977",2);
-            newMovie2.create("Star Wars Episode V: Empire Strikes Back", "Harrison Ford", "George Lucas", "127", Genre.SciFi, Classification.M, "1980",3);
-            newMovie3.create("Star Wars Episode VI: Return of the Jedi", "Harrison Ford", "George Lucas", "136", Genre.SciFi, Classification.M, "1983",5);
-            newMovie4.create("Star Wars Episode I: The Phantom Menace", "Ewan McGreggor", "George Lucas", "133", Genre.SciFi, Classification.M, "1999",2);
-            newMovie5.create("Star Wars Episode II: Attack of the Clones", "Ewan McGreggor", "George Lucas", "142", Genre.SciFi, Classification.M, "2002",1);
-            newMovie6.create("Star Wars Episode III: Revenge of the Sith", "Ewan McGreggor", "George Lucas", "140", Genre.SciFi, Classification.M, "2005",4);
-            newMovie7.create("Star Wars Episode VII: The Force Awakens", "Daisy Ridley", "J.J. Abrams", "135", Genre.SciFi, Classification.M, "2015",2);
-            newMovie8.create("Star Wars Episode VIII: The Last Jedi", "Daisy Ridley", "Rian Johnson", "152", Genre.SciFi, Classification.M, "2017",2);
-            newMovie9.create("Star Wars Episode IX: The Rise of Skywalker", "Daisy Ridley", "J.J. Abrams", "142", Genre.SciFi, Classification.M, "2019",1);
+            newMovie1.create("Star Wars Episode IV: A New Hope", "Harrison Ford", "George Lucas", "125", Genre.SciFi, Classification.M, "1977", 2);
+            newMovie2.create("Star Wars Episode V: Empire Strikes Back", "Harrison Ford", "George Lucas", "127", Genre.SciFi, Classification.M, "1980", 3);
+            newMovie3.create("Star Wars Episode VI: Return of the Jedi", "Harrison Ford", "George Lucas", "136", Genre.SciFi, Classification.M, "1983", 5);
+            newMovie4.create("Star Wars Episode I: The Phantom Menace", "Ewan McGreggor", "George Lucas", "133", Genre.SciFi, Classification.M, "1999", 2);
+            newMovie5.create("Star Wars Episode II: Attack of the Clones", "Ewan McGreggor", "George Lucas", "142", Genre.SciFi, Classification.M, "2002", 1);
+            newMovie6.create("Star Wars Episode III: Revenge of the Sith", "Ewan McGreggor", "George Lucas", "140", Genre.SciFi, Classification.M, "2005", 4);
+            newMovie7.create("Star Wars Episode VII: The Force Awakens", "Daisy Ridley", "J.J. Abrams", "135", Genre.SciFi, Classification.M, "2015", 2);
+            newMovie8.create("Star Wars Episode VIII: The Last Jedi", "Daisy Ridley", "Rian Johnson", "152", Genre.SciFi, Classification.M, "2017", 2);
+            newMovie9.create("Star Wars Episode IX: The Rise of Skywalker", "Daisy Ridley", "J.J. Abrams", "142", Genre.SciFi, Classification.M, "2019", 1);
 
             BinarySearchTree movieList = new BinarySearchTree();
 

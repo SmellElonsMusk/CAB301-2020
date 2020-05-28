@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace CAB301
@@ -39,7 +40,7 @@ namespace CAB301
             Array.Resize<Member>(ref memberCollection, memberCollection.Length + 1);
             Console.ReadLine();
 
-            
+
 
         }
 
@@ -81,64 +82,49 @@ namespace CAB301
 
         public Member FindMember(string userName)
         {
-            foreach (Member member in memberCollection)
-            {
 
-                try
-                {
-                    if (member.getUsername() == userName)
-                    {
-                        Console.WriteLine("Username not found: " + member.getUsername());
-                        return member;
-                        
-                    }
-                }
-                catch (NullReferenceException )
-                {
-                    Console.WriteLine("Username not found: " + member.getUsername() );
-                }
-                break;
-            }
-
-            return null;
-        }
-
-        public void BorrowMovie(string userName, Movie movie)
-        {
-
-            foreach (Member member in memberCollection)
+          foreach (Member member in memberCollection)
             {
                 if (member.getUsername() == userName)
                 {
-                    member.borrowMovie(movie);
-                    movie.borrow();
-                    Console.WriteLine("The movie :" + movie.getTitle() + " has been borrwed: " + movie.BorrowedCount());
-                }
-                 else
-                {
-                    
+                    //member.printinfo();
+                    return member;
                 }
             }
+
+            Console.WriteLine("Member not found");
             
+            return null;
+        }
 
-                //member.borrowMovie(movie);
-               
+        public void BorrowMovie(Member member, Movie movie)
+        {
 
-            //Console.WriteLine(movie.BorrowedCount());
-            //Console.ReadLine();
+            // Check if there is enough copies availabile, then rent it. If not throw error
 
-
-
+            member.borrowMovie(movie);
+            movie.borrow();
+            Console.WriteLine("The following movie was borrowed: " + movie.getTitle() + movie.BorrowedCount()+ " by: " + member.getFirst());
         }
 
         public void ReturnMovie(Movie movie, Member member)
         {
+            // Check if movie is currently borrowed.
             
         }
 
-        public void ListHeld()
+        public void ListHeld(Member member)
         {
+            try
+            {
+                member.currentlyHeld();
+            }
+            catch
+            {
 
+            }
+            
+            
         }
 
         /*  Prints all the current stored members info
@@ -153,36 +139,30 @@ namespace CAB301
             }
         }
 
-
-        public void registerTest()
+        public void registerMembers()
         {
-            // Loops Through as members are registered
+            
 
             Member newMember1 = new Member();
             newMember1.register("Ella", "Truelove", "10 Silver St", 0415123094, 1234);
             memberCollection[size] = newMember1;
             size += 1;
             Array.Resize<Member>(ref memberCollection, memberCollection.Length + 1);
-            //newMember1.printinfo();
+           
 
             Member newMember2 = new Member();
             newMember2.register("James", "Bond", "12 Redbank Rd", 0415123094, 4321);
             memberCollection[size] = newMember2;
             size += 1;
             Array.Resize<Member>(ref memberCollection, memberCollection.Length + 1);
-            //newMember2.printinfo();
+            
 
             Member newMember3 = new Member();
             newMember3.register("Beckie", "Lin", "12 Brisbane Rd", 0415123094, 4321);
             memberCollection[size] = newMember3;
             size += 1;
             Array.Resize<Member>(ref memberCollection, memberCollection.Length + 1);
-            //newMember3.printinfo();
-
-            //Console.WriteLine(memberCollection.Length);
-
-
-
+      
         }
 
         public int GetSize()

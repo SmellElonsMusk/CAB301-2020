@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 
 namespace CAB301
 {
@@ -18,6 +19,7 @@ namespace CAB301
          */
         MemberCollection memberCollection = new MemberCollection();
         BinarySearchTree movieList = new BinarySearchTree();
+        private static string userName;
 
         /// <summary>
         /// Main Program that runs
@@ -30,25 +32,21 @@ namespace CAB301
             MemberCollection memberCollection = new MemberCollection(); // initliases memberCollection Class
             BinarySearchTree movieList = new BinarySearchTree();
 
-            string userName ="";
+            
 
-            //TestCodeMovie();
-            memberCollection.registerTest();
-            //Console.Write("Username: ");
-            //userName = Console.ReadLine();
-
-            //memberCollection.FindMember(userName).printinfo();
-
+            // Adds 3 Members to the program
+            memberCollection.registerMembers();
+                        
             // Adds 15 Movies to the BST
             movieCollection.AddMovies();
-            MainMenu(movieCollection, memberCollection, userName);
+            MainMenu(movieCollection, memberCollection);
 
         }
 
         /* Main Menu 
          * 
          */ // Finished
-        public static void MainMenu(MovieCollection movieCollection, MemberCollection memberCollection, string userName)
+        public static void MainMenu(MovieCollection movieCollection, MemberCollection memberCollection)
         {
             Console.WriteLine("Welcome to the Community Library");
             Console.WriteLine("-----------Main Menu------------");
@@ -67,7 +65,7 @@ namespace CAB301
             if (result)
             {
                 Console.Clear();
-                MenuItem(num, movieCollection, memberCollection, userName);
+                MenuItem(num, movieCollection, memberCollection);
             }
             else { Console.WriteLine("Please enter a valid Number"); }
 
@@ -76,7 +74,7 @@ namespace CAB301
         /* Menu Item Selections
          * Sub Menus
          */ // Finished
-        public static void MenuItem(int mainMenuSelection, MovieCollection movieCollection, MemberCollection memberCollection, string userName)
+        public static void MenuItem(int mainMenuSelection, MovieCollection movieCollection, MemberCollection memberCollection)
         {
             if (mainMenuSelection == 0)
             {
@@ -102,7 +100,13 @@ namespace CAB301
                         break;
 
                     case 2:
-                        memberLogin(memberCollection, userName);
+
+                        if (userName == null)
+                        {
+                            memberLogin(memberCollection);
+                        }
+
+                        
                         Console.Clear();
                         Console.WriteLine("--------Member Menu---------");
                         Console.WriteLine("1. Display all movies");
@@ -125,18 +129,19 @@ namespace CAB301
             if (result)
             {
                 Console.Clear();
-                Do(mainMenuSelection, num, movieCollection, memberCollection, userName);
+                Do(mainMenuSelection, num, movieCollection, memberCollection);
             }
             else { Console.WriteLine("Please enter a valid Number"); }
         }
 
         /* Menu Do action
          */ // NOT Finished -> add member features and display top 10 Movies
-        public static void Do(int menu, int selection, MovieCollection movieCollection, MemberCollection memberCollection, string userName)
+        public static void Do(int menu, int selection, MovieCollection movieCollection, MemberCollection memberCollection)
         {
 
 
             bool repeatMenu = true;
+            
 
             switch (menu)
             {
@@ -144,7 +149,7 @@ namespace CAB301
 
                     if (selection == 0)
                     {
-                        MainMenu(movieCollection, memberCollection, userName);
+                        MainMenu(movieCollection, memberCollection);
                     }
 
                     switch (selection)
@@ -168,7 +173,7 @@ namespace CAB301
                                 {
                                     repeatMenu = false;
                                     Console.Clear();
-                                    MainMenu(movieCollection, memberCollection, userName);
+                                    MainMenu(movieCollection, memberCollection);
                                 }
 
 
@@ -192,7 +197,7 @@ namespace CAB301
                                 {
                                     repeatMenu = false;
                                     Console.Clear();
-                                    MainMenu(movieCollection, memberCollection, userName);
+                                    MainMenu(movieCollection, memberCollection);
                                 }
                             }
 
@@ -216,7 +221,7 @@ namespace CAB301
                                 {
                                     repeatMenu = false;
                                     Console.Clear();
-                                    MainMenu(movieCollection, memberCollection, userName);
+                                    MainMenu(movieCollection, memberCollection);
                                 }
                             }
                             break;
@@ -238,7 +243,7 @@ namespace CAB301
                                 {
                                     repeatMenu = false;
                                     Console.Clear();
-                                    MainMenu(movieCollection, memberCollection, userName);
+                                    MainMenu(movieCollection, memberCollection);
                                 }
                             }
                             break;
@@ -249,7 +254,7 @@ namespace CAB301
                 case 2: // Member Menu
                     if (selection == 0)
                     {
-                        MainMenu(movieCollection, memberCollection, userName);
+                        MainMenu(movieCollection, memberCollection);
                     }
                     switch (selection)
                     {
@@ -263,29 +268,31 @@ namespace CAB301
                             if (Console.ReadLine() == "0")
                             {
                                 Console.Clear();
-                                MainMenu(movieCollection, memberCollection, userName);
+                                MainMenu(movieCollection, memberCollection);
                             }
                             break;
                         case 2: // Borrow a DVD
 
+                            
+                            //memberCollection.FindMember(userName);
+
+
                             Console.WriteLine("---------Borrow Movie-----------");
                             Console.Write("Enter movie title: "); string title = Console.ReadLine();
 
+                            //Member thisMember = memberCollection.FindMember(userName);
+                            // Movie thisMovie = movieCollection.findMovie(title);
+                            //memberCollection.BorrowMovie(thisMember, thisMovie );
+                             memberCollection.BorrowMovie(memberCollection.FindMember(userName), movieCollection.findMovie(title));
 
-                            memberCollection.BorrowMovie(userName, movieCollection.findMovie(title));
-                                
-                              
 
-                               
-                           
-                            //memberCollection.BorrowMovie(memberCollection.FindMember(userName), movieCollection.findMovie(title));
                             Console.WriteLine("----------------------------");
                             Console.WriteLine("Please press 0 to return to previous menu: ");
 
                             if (Console.ReadLine() == "0")
                             {
                                 Console.Clear();
-                                MainMenu(movieCollection, memberCollection, userName);
+                                MenuItem(2, movieCollection, memberCollection);
                             }
 
                             break;
@@ -293,7 +300,8 @@ namespace CAB301
                             Console.WriteLine("Member Menu Option 3");
                             break;
                         case 4: // List Current Borrowed DVD's
-                            Console.WriteLine("Member Menu Option 4");
+
+                            memberCollection.ListHeld(memberCollection.FindMember(userName));
                             break;
                         case 5: // Display Top 10 Most Borrowed DVD's
                             Console.WriteLine("Member Menu Option 5");
@@ -332,7 +340,7 @@ namespace CAB301
 
         /* Member Login Page
          */ // Finished -> kinda needs to select member
-        public static void memberLogin(MemberCollection memberCollection, string userName)
+        public static void memberLogin(MemberCollection memberCollection )
         {
 
             // Probably need to add a method that checks if the member list has any members
@@ -357,12 +365,12 @@ namespace CAB301
             while (succesful == false)
 
             {
-                Console.Write("Enter Username: "); input1 = Console.ReadLine();
+                Console.Write("Enter Username: "); userName = Console.ReadLine();
                 Console.Write("Enter Password: "); input2 = Console.ReadLine();
 
-                if (usernames.Contains(input1) && passwords.Contains(Int32.Parse(input2)))
+                if (usernames.Contains(userName) && passwords.Contains(Int32.Parse(input2)))
                 {
-                    userName = input1;
+                   
                     succesful = true;
                 }
 

@@ -14,18 +14,18 @@ namespace CAB301
         private int phoneNumber;
         private string username;
         private int password;
-        
-        private Movie[] moviesBorrowed = new Movie[1];
+
+        private Movie[] moviesBorrowed;
         private int numMovies;
 
-        //
+        // Creates Member
         public void register(string firstName, string lastName, string homeAddress, int phoneNumber, int password)
         {
             this.firstName = firstName;
             this.lastName = lastName;
             this.homeAddress = homeAddress;
             this.phoneNumber = phoneNumber;
-            this.username = lastName+firstName;
+            this.username = lastName + firstName;
             this.password = password;
             this.numMovies = 0;
             this.moviesBorrowed = new Movie[1];
@@ -71,16 +71,47 @@ namespace CAB301
             return password;
         }
 
-        public void borrowMovie(Movie movie )
+        public void borrowMovie(Movie movie) // Finished
         {
-            numMovies += 1;
+
             this.moviesBorrowed[numMovies] = movie;
+            Array.Resize<Movie>(ref moviesBorrowed, moviesBorrowed.Length + 1);
+            numMovies = +1;
         }
 
-        public Movie[] currentlyHeld()
+        public void ReturnMovie(Movie movie) // 
         {
-            return moviesBorrowed;
+            int i = 0;
+            while ( i < moviesBorrowed.Length)
+            {
+                if (movie.getTitle() == moviesBorrowed[i].getTitle())
+                {
+                    moviesBorrowed[i] = null;
+                }
+            }
+
+            
         }
+
+        public void currentlyHeld() // needs work
+        {
+            if (moviesBorrowed.Length == 1)
+            {
+                Console.WriteLine("This user currently has no borrowed Movies");
+            }
+            else
+            {
+                foreach (Movie movie in moviesBorrowed)
+                {
+                    Console.WriteLine(movie.getTitle());
+                    
+                    
+                }
+            }
+
+        }
+
+
 
         public void printinfo()
         {
@@ -90,7 +121,7 @@ namespace CAB301
             Console.WriteLine("Username : " + username);
             Console.WriteLine("Password : " + password);
             Console.WriteLine("");
-            
+
         }
     }
 }

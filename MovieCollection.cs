@@ -337,10 +337,7 @@ namespace CAB301
         {
             if (root != null)
             {
-
                 return root.Search(title, root);
-
-
             }
             else
             {
@@ -421,7 +418,7 @@ namespace CAB301
                 }
 
             }
-            else if (thisNode.RightNode == null) // Current node only has a left child
+            else if (thisNode.RightNode == null) // Current node only has a left child 
             {
                 if (thisNode == root)
                 {
@@ -480,7 +477,6 @@ namespace CAB301
 
 
         }
-
         /* Gets the succesor of the current treenode
          */
         private TreeNode GetSuccesor(TreeNode node)
@@ -575,7 +571,7 @@ namespace CAB301
             {
                 title = binaryTree.FindMovie(param1).Data().getTitle();
             }
-            catch (NullReferenceException )  // if the result is null, exception is thrown and caught
+            catch (NullReferenceException)  // if the result is null, exception is thrown and caught
             {
                 // Does nothing
             }
@@ -711,7 +707,7 @@ namespace CAB301
                     binaryTree.FindMovie(input).Data();
                     success = true;
                 }
-                catch (NullReferenceException ) // Title not found. Repeats the process
+                catch (NullReferenceException) // Title not found. Repeats the process
                 {
                     Console.WriteLine("----------------------------");
                     Console.WriteLine("The Movie: " + input + " does not exist.");
@@ -724,7 +720,7 @@ namespace CAB301
             Console.WriteLine("The Movie: " + binaryTree.FindMovie(input).Data().getTitle() + " has been deleted.");
             Console.WriteLine("----------------------------");
             binaryTree.Remove(binaryTree.FindMovie(input).Data());
-            
+
         }
 
         public Movie findMovie(string title)
@@ -732,7 +728,8 @@ namespace CAB301
             try
             {
                 return binaryTree.FindMovie(title).Data();
-            } catch (NullReferenceException )
+            }
+            catch (NullReferenceException)
             {
                 // do nothing
             }
@@ -752,7 +749,7 @@ namespace CAB301
         {
 
 
-        } 
+        }
 
         /* Adds 15 Movies to the List
          */
@@ -791,7 +788,7 @@ namespace CAB301
             newMovie12.create("Avengers", "Chris Hemsworth", "Joss Whedon", "142", Genre.Action, Classification.M, "2012", 4);
             newMovie13.create("Avengers: Age of Ultron", "Chris Evans, Robert Downey J.r", "Joss Whedon", "141", Genre.Action, Classification.M, "2015", 2);
             newMovie14.create("Avengers: Infinity War", "Chris Hemsworth, Robert Downey J.r", "Joe Russo, Anthoiny Russo", "149", Genre.Action, Classification.M, "2018", 3);
-            newMovie15.create("Avegers: End Game", "Chris Hemsworth, Robert Downey J.r", "Joe Russo, Anthoiny Russo", "181", Genre.Action, Classification.M, "", 2);
+            newMovie15.create("Avengers: End Game", "Chris Hemsworth, Robert Downey J.r", "Joe Russo, Anthoiny Russo", "181", Genre.Action, Classification.M, "", 2);
 
             // Adds movies to the BSS
             binaryTree.Add(newMovie1);
@@ -810,7 +807,7 @@ namespace CAB301
             binaryTree.Add(newMovie14);
             binaryTree.Add(newMovie15);
 
-        } 
+        }
 
     }
 }

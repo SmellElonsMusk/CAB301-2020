@@ -177,7 +177,7 @@ namespace CAB301
                                 {
                                     repeatMenu = false;
                                     Console.Clear();
-                                    MainMenu(movieCollection, memberCollection);
+                                    MenuItem(1, movieCollection, memberCollection);
                                 }
 
 
@@ -201,7 +201,7 @@ namespace CAB301
                                 {
                                     repeatMenu = false;
                                     Console.Clear();
-                                    MainMenu(movieCollection, memberCollection);
+                                    MenuItem(1, movieCollection, memberCollection);
                                 }
                             }
 
@@ -225,7 +225,7 @@ namespace CAB301
                                 {
                                     repeatMenu = false;
                                     Console.Clear();
-                                    MainMenu(movieCollection, memberCollection);
+                                    MenuItem(1, movieCollection, memberCollection);
                                 }
                             }
                             break;
@@ -247,7 +247,7 @@ namespace CAB301
                                 {
                                     repeatMenu = false;
                                     Console.Clear();
-                                    MainMenu(movieCollection, memberCollection);
+                                    MenuItem(1, movieCollection, memberCollection);
                                 }
                             }
                             break;
@@ -367,7 +367,7 @@ namespace CAB301
                     Console.Clear();
                     Console.WriteLine("Login failed. Please try again.");
                     
-                    succesful = false;
+                    
                 }
             }
         }

@@ -21,7 +21,7 @@ namespace CAB301
     */
     class TreeNode
     {
-        Movie[] movies;
+        
         private Movie data;
         private TreeNode rightNode;
         private TreeNode leftNode;
@@ -265,6 +265,49 @@ namespace CAB301
 
         }
 
+        //public void InitArray(int size)
+        //{
+        //    movies = new Movie[15];
+        //}
+
+        public void BSTtoArray(Movie[] movies, int arrayCount)
+        {
+            int current = arrayCount;
+            if (leftNode != null)
+            {
+                leftNode.BSTtoArray(movies, arrayCount);
+
+            }
+            if (this != null)
+            {
+                //if ( arrayCount > 15)
+                //{
+
+                //} else
+                //{
+                    movies[current] = data;
+                    //Console.WriteLine(movies[i].getTitle());
+                    arrayCount = arrayCount + 1;
+                //}
+                
+            }
+            
+            if (rightNode != null)
+            {
+                rightNode.BSTtoArray(movies, arrayCount);
+            }
+        }
+
+        //public Movie[] ReturnArray()
+        //{
+        //    //for (int i = 0; i < 15; i++)          //testing code
+        //    //{
+        //    //    Console.WriteLine(movies[i].getTitle());
+        //    //}
+        //    return movies;
+        //}
+
+
         public Movie ReturnMovie()
         {
             if (leftNode != null)
@@ -351,33 +394,6 @@ namespace CAB301
         }
 
 
-
-
-
-        /* Searches the tree sequentially and returns each node
-         *  left -> root -> right
-         */
-        //public TreeNode TopTen()
-        //{
-        //    if (leftNode != null)
-        //    {
-        //        leftNode.InOrderTraverse();
-
-        //    }
-        //    else if (this != null)
-        //    {
-        //        return this;
-        //    }
-
-        //    else if (rightNode != null)
-        //    {
-        //        rightNode.InOrderTraverse();
-        //    }
-
-        //    return null; // if no more node's are found return null
-        //} // doesnt work
-
-
         /* Prints the movie info to the screen
          */
         public void PrintInfo()
@@ -390,6 +406,8 @@ namespace CAB301
      */
     class BinarySearchTree
     {
+        Movie[] movies = new Movie[15];
+        int arrayCount = 0;
         private TreeNode root;
 
         /* Create the root Node
@@ -611,7 +629,37 @@ namespace CAB301
             }
         }
 
-        public Movie MovieInOrderTraversal()
+      
+        public void BSTtoArr()
+        {
+            
+                root.BSTtoArray(movies, arrayCount);
+            
+        }
+
+        public Movie[] ReturnArray()
+        {
+            try
+            {
+                
+                //while (root!= null)
+                //{
+                //    root.BSTtoArray();
+                //}
+                
+                
+            }
+            catch
+            {
+                Console.WriteLine("Array Creation failed");
+            }
+            return movies;
+        }
+
+
+
+
+        public Movie MovieInOrderTraversal() // not used
         {
             if (root != null)
             {
@@ -622,7 +670,7 @@ namespace CAB301
             return null; // if it fails
         }
 
-        public Movie[] test()
+        public Movie[] test() // not used
         {
             int size = count(root);
             Movie[] movies = new Movie[size];
@@ -1011,6 +1059,13 @@ namespace CAB301
         static public int Partition(Movie[] movies, int left, int right)
         {
             int pivot = movies[left].BorrowedCount(); // Creates a pivot point
+
+
+            if (movies == null)
+            {
+
+            } 
+            
             while (true)
             {
                 while (movies[left].BorrowedCount() < pivot) // If the movies to the left of th
@@ -1055,17 +1110,19 @@ namespace CAB301
         public void TopTen()
         {
             //Movie[] TopTen = binaryTree.toBSTArray(); // Converts the Entire BST to an Array
-            Movie[] TopTen = binaryTree.test(); // Converts the Entire BST to an Array
+            //Movie[] TopTen = binaryTree.test(); // Converts the Entire BST to an Array
+            binaryTree.BSTtoArr();
+            Movie[] TopTen = binaryTree.ReturnArray();
             int len = TopTen.Length; //TopTen.Length;
 
             //try
             //{
-            //    QuickSort(TopTen, 0, len - 1);
-            //}
-            //catch
-            //{
+                QuickSort(TopTen, 0, len - 1);
+           // }
+           // catch
+           // {
 
-            // }
+           // }
 
 
             for (int i = 0; i <= 10-1; i++)

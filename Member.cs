@@ -109,9 +109,16 @@ namespace CAB301
             }
             else
             {
+               
+
                 foreach (Movie movie in moviesBorrowed)
                 {
-                    movie.PrintInfo();                   
+
+                    if (movie == null)
+                    {
+
+                    }
+                    else movie.PrintInfo();                   
                     
                 }
             }

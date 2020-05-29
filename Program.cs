@@ -291,8 +291,11 @@ namespace CAB301
 
                             break;
                         case 3: // Return a DVD
-                            Console.WriteLine("Member Menu Option 3");
-
+                           
+                            Console.WriteLine("--------Return Movie--------");
+                            memberCollection.ListHeld(memberCollection.FindMember(userName));
+                            Console.Write("Enter movie title: "); title = Console.ReadLine();
+                            memberCollection.ReturnMovie(memberCollection.FindMember(userName), movieCollection.findMovie(title));
                             Console.WriteLine("----------------------------");
                             Console.WriteLine("Please press 0 to return to previous menu: ");
 

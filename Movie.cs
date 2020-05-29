@@ -37,7 +37,7 @@ namespace CAB301
         private string title;
         private string starring;
         private string director;
-        private string duration;
+        private string duration; 
         private Genre genre;
         private Classification classification;
         private string releaseDate;

@@ -114,15 +114,20 @@ namespace CAB301
            
         }
 
-        public void ReturnMovie(Movie movie, Member member)
+        public void ReturnMovie( Member member, Movie movie)
         {
-            // Check if movie is currently borrowed.
+
+            member.ReturnMovie(movie);
+            movie.Return();
+
+            Console.WriteLine("The movie: " + movie.getTitle() + " has been returned");
+
             
         }
 
         public void ListHeld(Member member)
         {
-            Console.WriteLine("-----Currently Borrowed------");
+            
 
             try
             {

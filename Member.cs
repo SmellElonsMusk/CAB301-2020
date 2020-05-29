@@ -35,7 +35,7 @@ namespace CAB301
         {
             return firstName + lastName;
         }
-
+         
         public string getFirst()
         {
             return firstName;
@@ -82,14 +82,22 @@ namespace CAB301
         public void ReturnMovie(Movie movie) // 
         {
             int i = 0;
-            while ( i < moviesBorrowed.Length)
+            for ( i = 0;  i < moviesBorrowed.Length; i++)
             {
-                if (movie.getTitle() == moviesBorrowed[i].getTitle())
+                try
                 {
-                    moviesBorrowed[i] = null;
+                    if (movie.getTitle() == moviesBorrowed[i].getTitle())
+                    {
+                        moviesBorrowed[i] = null;
+                    }
                 }
-            }
+                catch
+                {
 
+                }
+                
+            }
+            i++;
             
         }
 

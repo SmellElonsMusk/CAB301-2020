@@ -1074,7 +1074,7 @@ namespace CAB301
                 }
                 while (movies[right].BorrowedCount() > pivot) //  
                 {
-                    right++;
+                    right--;
                 }
                 if (left < right) //  
                 {
@@ -1111,13 +1111,67 @@ namespace CAB301
         {
             //Movie[] TopTen = binaryTree.toBSTArray(); // Converts the Entire BST to an Array
             //Movie[] TopTen = binaryTree.test(); // Converts the Entire BST to an Array
-            binaryTree.BSTtoArr();
-            Movie[] TopTen = binaryTree.ReturnArray();
-            int len = TopTen.Length; //TopTen.Length;
+            //binaryTree.BSTtoArr();
+            //Movie[] TopTen = binaryTree.ReturnArray();
+            //int len = TopTen.Length; //TopTen.Length;
+
+            Movie[] TopTen = new Movie[5];
+            // Creates movie objects
+            Movie newMovie1 = new Movie();
+            Movie newMovie2 = new Movie();
+            Movie newMovie3 = new Movie();
+            Movie newMovie4 = new Movie();
+            Movie newMovie5 = new Movie();
+
+            newMovie1.create("Star Wars Episode IV: A New Hope", "Harrison Ford", "George Lucas", "125", Genre.SciFi, Classification.M, "1977", 5);
+            newMovie2.create("Star Wars Episode V: Empire Strikes Back", "Harrison Ford", "George Lucas", "127", Genre.SciFi, Classification.M, "1980", 3);
+            newMovie3.create("Star Wars Episode VI: Return of the Jedi", "Harrison Ford", "George Lucas", "136", Genre.SciFi, Classification.M, "1983", 6);
+            newMovie4.create("Star Wars Episode I: The Phantom Menace", "Ewan McGreggor", "George Lucas", "133", Genre.SciFi, Classification.M, "1999", 2);
+            newMovie5.create("Star Wars Episode II: Attack of the Clones", "Ewan McGreggor", "George Lucas", "142", Genre.SciFi, Classification.M, "2002", 10);
+
+            newMovie1.borrow();
+            newMovie1.borrow();
+            newMovie1.borrow();
+            newMovie1.borrow();
+            newMovie1.borrow();
+
+            newMovie2.borrow();
+            newMovie2.borrow();
+            newMovie2.borrow();
+
+            newMovie3.borrow();
+            newMovie3.borrow();
+            newMovie3.borrow();
+            newMovie3.borrow();
+            newMovie3.borrow();
+            newMovie3.borrow();
+
+            newMovie4.borrow();
+            newMovie4.borrow();
+
+            newMovie5.borrow();
+            newMovie5.borrow();
+            newMovie5.borrow();
+            newMovie5.borrow();
+            newMovie5.borrow();
+            newMovie5.borrow();
+            newMovie5.borrow();
+            newMovie5.borrow();
+            newMovie5.borrow();
+            newMovie5.borrow();
+
+
+            TopTen[0] = newMovie1;
+            TopTen[1] = newMovie2;
+            TopTen[2] = newMovie3;
+            TopTen[3] = newMovie4;
+            TopTen[4] = newMovie5;
+
+            int len = TopTen.Length - 1;
 
             //try
             //{
-                QuickSort(TopTen, 0, len - 1);
+            QuickSort(TopTen, 0, len);
            // }
            // catch
            // {
@@ -1125,7 +1179,7 @@ namespace CAB301
            // }
 
 
-            for (int i = 0; i <= 10-1; i++)
+            for (int i = len; i >= 0; i--)
             {
                 try
                 {

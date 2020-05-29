@@ -187,7 +187,7 @@ namespace CAB301
                             while (repeatMenu)
                             {
                                 movieCollection.removeMovie();
-                                //Console.Clear();
+                                Console.Clear();
                                 Console.WriteLine("--------Remove DVD----------");
                                 Console.WriteLine("1. Remove Another Movie ");
                                 Console.WriteLine("----------------------------");
@@ -262,10 +262,9 @@ namespace CAB301
                     }
                     switch (selection)
                     {
-                        case 1: // List DVD's
-                            Console.WriteLine("Current Movies:");
+                        case 1: // List DVD's                            
+                            Console.WriteLine("--------Current Movies------");
                             movieCollection.displayAllMovies();
-
                             Console.WriteLine("----------------------------");
                             Console.WriteLine("Please press 0 to return to previous menu: ");
 
@@ -276,20 +275,11 @@ namespace CAB301
                             }
                             break;
                         case 2: // Borrow a DVD
-
-                            
-                            //memberCollection.FindMember(userName);
-
+                            movieCollection.displayAllMovies();
 
                             Console.WriteLine("---------Borrow Movie-----------");
                             Console.Write("Enter movie title: "); string title = Console.ReadLine();
-
-                            //Member thisMember = memberCollection.FindMember(userName);
-                            // Movie thisMovie = movieCollection.findMovie(title);
-                            //memberCollection.BorrowMovie(thisMember, thisMovie );
-                             memberCollection.BorrowMovie(memberCollection.FindMember(userName), movieCollection.findMovie(title));
-
-
+                            memberCollection.BorrowMovie(memberCollection.FindMember(userName), movieCollection.findMovie(title));
                             Console.WriteLine("----------------------------");
                             Console.WriteLine("Please press 0 to return to previous menu: ");
 
@@ -373,7 +363,7 @@ namespace CAB301
         }
 
         /* Member Login Page
-         */ // Finished -> kinda needs to select member
+         */ // Finished
         public static void memberLogin(MemberCollection memberCollection )
         {
 

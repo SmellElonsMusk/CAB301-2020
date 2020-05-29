@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
+using System.Threading;
 
 namespace CAB301
 {
+   
+
     /* Enum for Red/Black Tree
      */
     enum Colour
@@ -17,6 +21,7 @@ namespace CAB301
     */
     class TreeNode
     {
+        Movie[] movies;
         private Movie data;
         private TreeNode rightNode;
         private TreeNode leftNode;
@@ -176,6 +181,9 @@ namespace CAB301
 
         } // doesn't work
 
+        /* Searchs the tree for the node that contains the title
+         * 
+         */
         public TreeNode Search(string title, TreeNode node)
         {
             if (node != null)
@@ -200,6 +208,7 @@ namespace CAB301
             }
 
         }
+
 
 
 
@@ -235,6 +244,7 @@ namespace CAB301
 
         }
 
+
         /* Searches the Tree In Order
          * Left->Root->Right Nodes recursively of each subtree 
          * Sorted Alphabetically
@@ -246,13 +256,36 @@ namespace CAB301
                 leftNode.InOrderTraverse();
 
             }
-            data.PrintInfo(); 
+            data.PrintInfo();
             if (rightNode != null)
             {
                 rightNode.InOrderTraverse();
             }
 
 
+        }
+
+        public Movie ReturnMovie()
+        {
+            if (leftNode != null)
+            {
+                leftNode.ReturnMovie();
+
+            }
+
+            if (leftNode != null)
+            {
+                return data;
+            }
+
+
+            if (rightNode != null)
+            {
+                rightNode.ReturnMovie();
+
+            }
+
+            return null;
         }
 
         /* Searches Tree
@@ -292,6 +325,58 @@ namespace CAB301
 
 
         }
+
+        /* Searches the Tree In Order
+         * Left->Root->Right Nodes recursively of each subtree 
+         * Sorted Alphabetically
+         */
+        public Movie MovieInOrderTraverse()
+        {
+            if (leftNode != null)
+            {
+                leftNode.MovieInOrderTraverse();
+
+            }
+            if (this != null)
+            {
+                return data;
+            }
+            
+            if (rightNode != null)
+            {
+                rightNode.MovieInOrderTraverse();
+            }
+            return null; // if the traversal fails
+
+        }
+
+
+
+
+
+        /* Searches the tree sequentially and returns each node
+         *  left -> root -> right
+         */
+        //public TreeNode TopTen()
+        //{
+        //    if (leftNode != null)
+        //    {
+        //        leftNode.InOrderTraverse();
+
+        //    }
+        //    else if (this != null)
+        //    {
+        //        return this;
+        //    }
+
+        //    else if (rightNode != null)
+        //    {
+        //        rightNode.InOrderTraverse();
+        //    }
+
+        //    return null; // if no more node's are found return null
+        //} // doesnt work
+
 
         /* Prints the movie info to the screen
          */
@@ -477,6 +562,7 @@ namespace CAB301
 
 
         }
+
         /* Gets the succesor of the current treenode
          */
         private TreeNode GetSuccesor(TreeNode node)
@@ -515,6 +601,7 @@ namespace CAB301
         }
 
         /* Traverse the tree in order of nodes
+         * left -> root -> right
          */
         public void InOrderTraversal()
         {
@@ -524,7 +611,154 @@ namespace CAB301
             }
         }
 
-        /* Traverse the tree in order Root->left->right
+        public Movie MovieInOrderTraversal()
+        {
+            if (root != null)
+            {
+                //root.MovieInOrderTraverse();
+                return root.Data();
+            }
+
+            return null; // if it fails
+        }
+
+        public Movie[] test()
+        {
+            int size = count(root);
+            Movie[] movies = new Movie[size];
+            int num = 0;
+
+            while (num != size)
+            {
+                movies[num] = root.MovieInOrderTraverse();
+                num += 1;
+
+            }
+            return movies;
+        }
+
+
+
+        /* Leaf count helper function 
+         */
+        public virtual int LeafCount
+        {
+            get
+            {
+                return getLeafCount(root);
+            }
+
+
+        }
+
+        /* Counts the number of Leaf Nodes
+         * 
+         */
+        public virtual int getLeafCount(TreeNode node)
+        {
+            if (node == null)
+            {
+                return 0;
+            } if (node.LeftNode == null && node.RightNode == null)
+            {
+                return 1;
+
+            } else
+            {
+                return getLeafCount(node.LeftNode) + getLeafCount(node.RightNode);
+            }
+        }
+
+        /* Counts the number of nodes in the BST
+         */
+        public int count(TreeNode node)
+        {
+            int c = 1;
+            if (node == null)
+            {
+                return 0;
+            }
+            else
+            {
+                c += count(node.LeftNode);
+                c += count(node.RightNode);
+            }
+            return c;
+        }
+
+        public void PreOrder(TreeNode node, Movie[] movies, int num)
+        {
+            
+            if (node == null)
+            {
+                movies[num] = node.Data();
+                num += 1;
+            }
+            PreOrder(root.LeftNode, movies, num);
+            PreOrder(root.RightNode, movies, num);
+
+            
+        }
+
+        // Bst to array
+
+        public Movie[] toBSTArray()
+        {
+
+            int size = count(root);//; // Finds the # of nodes in the tree
+            int num = 0;
+            Movie[] movies = new Movie[size];
+
+            while ( num <= size)
+            {
+                PreOrder(root, movies, num);
+            }
+            
+
+            //MakeArray(root, 0, movies);
+            return movies;
+        }
+
+        // Helper function
+        public void MakeArray(TreeNode node, int i, Movie[] movies)
+        {
+
+            
+
+            /* 
+             * https://stackoverflow.com/questions/13870118/converting-bst-to-array
+             * 
+             */
+
+            //if (node != null)
+            //{
+            //    movies[i] = root.Data(); // Assigns the Node data to the array
+            //    i += 1;
+            //    MakeArray(node.LeftNode, i, movies);
+            //    MakeArray(node.RightNode, i, movies);
+
+            //}
+
+            //if (root.LeftNode != null)
+            //{
+            //    movies[i] = root.Data();
+            //    i += 1;
+            //    MakeArray(node.RightNode, i, movies);
+            //}
+
+            //if (root.RightNode != null)
+            //{
+            //    movies[i] = root.Data();
+            //    i += 1;
+            //    MakeArray(node.LeftNode, i, movies);
+            //}
+
+
+           
+        }
+
+        /* Traverse the tree in order 
+         * Root->left->right
          */
         public void PreOrderTraversal()
         {
@@ -544,6 +778,33 @@ namespace CAB301
                 root.PostOrderTraversal();
             }
         }
+
+        /* Searches the tree for the top remted movie
+         *  left -> root -> right
+         */ // does nothing
+        public void TopTen()
+        {
+            // Algorithm that finds max rented
+            int MaxCount = 12; // needs to be added
+            // Algorithm that searches based on the max
+
+            //root.Search(MaxCount);
+        }
+
+
+        //public Movie [] preOrder (TreeNode node)
+        //{
+        //    //Movie[] movies = new Movies[]
+        //    //if (root != null)
+        //    //{
+        //    //    return root
+        //    //}
+        //}
+
+
+
+
+
     }
 
     /* Main Movie Collection class -> Stores and sorts movies
@@ -743,13 +1004,91 @@ namespace CAB301
             binaryTree.InOrderTraversal();
         }
 
-        /* Lists Top 10 Most Rented Movies
+        /*
+         *  https://www.tutorialspoint.com/chash-program-to-perform-quick-sort-using-recursion
+         * 
          */
-        public void listTopTen() // NOT finsihed -> Needs to be implmented 
+        static public int Partition(Movie[] movies, int left, int right)
         {
+            int pivot = movies[left].BorrowedCount(); // Creates a pivot point
+            while (true)
+            {
+                while (movies[left].BorrowedCount() < pivot) // If the movies to the left of th
+                {
+                    left++;
+                }
+                while (movies[right].BorrowedCount() > pivot) //  
+                {
+                    right++;
+                }
+                if (left < right) //  
+                {
+                    Movie temp = movies[right]; // Creates a temp movie array
+                    movies[right] = movies[left]; // shifts the movies around
+                    movies[left] = temp;
+                }
+                else
+                {
+                    return right;
+                }
+            }
+        }
+
+        public void QuickSort(Movie[] movies, int left, int right)
+        {
+            if (left < right)
+            {
+                int pivot = Partition(movies, left, right);
+                if (pivot > 1)
+                {
+                    QuickSort(movies, left, pivot - 1);
+                }
+                if (pivot + 1 < right)
+                {
+                    QuickSort(movies, pivot + 1, right);
+                }
+            }
 
 
         }
+
+        public void TopTen()
+        {
+            //Movie[] TopTen = binaryTree.toBSTArray(); // Converts the Entire BST to an Array
+            Movie[] TopTen = binaryTree.test(); // Converts the Entire BST to an Array
+            int len = TopTen.Length; //TopTen.Length;
+
+            //try
+            //{
+            //    QuickSort(TopTen, 0, len - 1);
+            //}
+            //catch
+            //{
+
+            // }
+
+
+            for (int i = 0; i <= 10-1; i++)
+            {
+                try
+                {
+
+                    Console.WriteLine(TopTen[i].getTitle() + " Borrowed Count: " + TopTen[i].BorrowedCount());
+                }
+                catch
+                {
+
+                }
+
+            }
+
+
+
+        }
+
+
+
+
 
         /* Adds 15 Movies to the List
          */
@@ -774,11 +1113,11 @@ namespace CAB301
             Movie newMovie15 = new Movie();
 
             // Adds details to movie objects
-            newMovie1.create("Star Wars Episode IV: A New Hope", "Harrison Ford", "George Lucas", "125", Genre.SciFi, Classification.M, "1977", 2);
+            newMovie1.create("Star Wars Episode IV: A New Hope", "Harrison Ford", "George Lucas", "125", Genre.SciFi, Classification.M, "1977", 5);
             newMovie2.create("Star Wars Episode V: Empire Strikes Back", "Harrison Ford", "George Lucas", "127", Genre.SciFi, Classification.M, "1980", 3);
             newMovie3.create("Star Wars Episode VI: Return of the Jedi", "Harrison Ford", "George Lucas", "136", Genre.SciFi, Classification.M, "1983", 5);
             newMovie4.create("Star Wars Episode I: The Phantom Menace", "Ewan McGreggor", "George Lucas", "133", Genre.SciFi, Classification.M, "1999", 2);
-            newMovie5.create("Star Wars Episode II: Attack of the Clones", "Ewan McGreggor", "George Lucas", "142", Genre.SciFi, Classification.M, "2002", 1);
+            newMovie5.create("Star Wars Episode II: Attack of the Clones", "Ewan McGreggor", "George Lucas", "142", Genre.SciFi, Classification.M, "2002", 10);
             newMovie6.create("Star Wars Episode III: Revenge of the Sith", "Ewan McGreggor", "George Lucas", "140", Genre.SciFi, Classification.M, "2005", 4);
             newMovie7.create("Star Wars Episode VII: The Force Awakens", "Daisy Ridley", "J.J. Abrams", "135", Genre.SciFi, Classification.M, "2015", 2);
             newMovie8.create("Star Wars Episode VIII: The Last Jedi", "Daisy Ridley", "Rian Johnson", "152", Genre.SciFi, Classification.M, "2017", 2);
@@ -786,9 +1125,13 @@ namespace CAB301
             newMovie10.create("Iron Man", "Robert Downey Jr.", "Jon Favereau", "126", Genre.Action, Classification.M, "2008", 4);
             newMovie11.create("Thor: Ragnarok", "Chris Hemsworth", "Taika Waititi", "130", Genre.Action, Classification.M, "2017", 2);
             newMovie12.create("Avengers", "Chris Hemsworth", "Joss Whedon", "142", Genre.Action, Classification.M, "2012", 4);
-            newMovie13.create("Avengers: Age of Ultron", "Chris Evans, Robert Downey J.r", "Joss Whedon", "141", Genre.Action, Classification.M, "2015", 2);
-            newMovie14.create("Avengers: Infinity War", "Chris Hemsworth, Robert Downey J.r", "Joe Russo, Anthoiny Russo", "149", Genre.Action, Classification.M, "2018", 3);
-            newMovie15.create("Avengers: End Game", "Chris Hemsworth, Robert Downey J.r", "Joe Russo, Anthoiny Russo", "181", Genre.Action, Classification.M, "", 2);
+            newMovie13.create("Avengers: Age of Ultron", "Chris Evans, Robert Downey J.r", "Joss Whedon", "141", Genre.Action, Classification.M, "2015", 12);
+            newMovie14.create("Avengers: Infinity War", "Chris Hemsworth, Robert Downey J.r", "Joe Russo, Anthoiny Russo", "149", Genre.Action, Classification.M, "2018", 11);
+            newMovie15.create("Avengers: End Game", "Chris Hemsworth, Robert Downey J.r", "Joe Russo, Anthoiny Russo", "181", Genre.Action, Classification.M, "", 13);
+
+
+
+
 
             // Adds movies to the BSS
             binaryTree.Add(newMovie1);
@@ -807,10 +1150,53 @@ namespace CAB301
             binaryTree.Add(newMovie14);
             binaryTree.Add(newMovie15);
 
-            
+            // Rents movies for Top 10 List -- testing
+            for (int i = 0; i < 12; i++)
+            {
+                newMovie15.borrow();
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                newMovie14.borrow();
+            }
+
+            for (int i = 0; i < 9; i++)
+            {
+                newMovie13.borrow();
+            }
+
+            for (int i = 0; i < 9; i++)
+            {
+                newMovie5.borrow();
+            }
+
+
+            //newMovie1.borrow();
+            //newMovie2.borrow();
+            //newMovie3.borrow();
+            //newMovie4.borrow();
+            //newMovie5.borrow();
+            //newMovie6.borrow();
+            //newMovie7.borrow();
+            //newMovie8.borrow();
+            //newMovie9.borrow();
+            //newMovie10.borrow();
+            //newMovie11.borrow();
+            //newMovie12.borrow();
+            //newMovie13.borrow();
+            //newMovie14.borrow();
+            //newMovie15.borrow();
+
+
+
+
 
         }
 
     }
+
+
+
 }
 

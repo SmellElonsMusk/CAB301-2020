@@ -322,7 +322,7 @@ namespace CAB301
                             break;
                         case 5: // Display Top 10 Most Borrowed DVD's
                             Console.WriteLine("-----------Top 10------------");
-                            
+                            movieCollection.TopTen();
 
                             Console.WriteLine("----------------------------");
                             Console.WriteLine("Please press 0 to return to previous menu: ");

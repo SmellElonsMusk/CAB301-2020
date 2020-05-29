@@ -7,6 +7,8 @@ using System.Text;
 
 namespace CAB301
 {
+    /* Genre selections for the movie
+     */
     enum Genre
     {
         Drama,
@@ -20,6 +22,8 @@ namespace CAB301
         Other
     }
 
+    /* Classification selections for the movie
+     */
     enum Classification
     {
         G,
@@ -27,8 +31,6 @@ namespace CAB301
         M,
         MA15
     }
-
-
 
     class Movie
     {
@@ -41,7 +43,6 @@ namespace CAB301
         private string releaseDate;
         private int copies;
         private int borrowedCount;
-        private bool isBorrowed;
 
         /* Creates a new movie 
          * 
@@ -59,7 +60,8 @@ namespace CAB301
 
         }
 
-
+        /* Adds copies of the movie
+         */
         public void AddCopies(int num)
         {
             for (int i = 0; i < num; i++) {
@@ -68,18 +70,23 @@ namespace CAB301
             
         }
 
-        // Removes a single copy of the movie from the movie object
-        public void removeCopies()
-        {
-            this.copies -= 1;
-        }
-
+        /* Borrows the movie and decreased available copies by 1
+         */
         public void borrow()
         {
             this.borrowedCount += 1;
             this.copies -= 1;
         }
 
+        /* Returns the movie and increases available copies by 1
+         */
+        public void Return()
+        {
+            this.copies += 1;
+        }
+
+        /* Returns the number of times this movie has been borrowed
+         */
         public int BorrowedCount()
         {
             return borrowedCount;
@@ -93,11 +100,15 @@ namespace CAB301
             return copies;
         }
 
+        /* Returns the title of the current movie
+         */
         public string getTitle()
         {
             return title;
         }
 
+        /* Prints all the info of the current movie to the console
+         */
         public void PrintInfo()
         {
             Console.WriteLine("Title: " + title);
@@ -113,6 +124,8 @@ namespace CAB301
 
         }
 
+        /* Returns strings of all current info 
+         */
         public override string ToString()
         {
             return title + " " + starring + " " + director + " " + duration + " " + genre + " " + classification + " " + releaseDate + " " + copies;

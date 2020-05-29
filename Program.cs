@@ -298,13 +298,43 @@ namespace CAB301
                             break;
                         case 3: // Return a DVD
                             Console.WriteLine("Member Menu Option 3");
+
+                            Console.WriteLine("----------------------------");
+                            Console.WriteLine("Please press 0 to return to previous menu: ");
+
+                            if (Console.ReadLine() == "0")
+                            {
+                                Console.Clear();
+                                MenuItem(2, movieCollection, memberCollection);
+                            }
                             break;
                         case 4: // List Current Borrowed DVD's
-
+                            Console.WriteLine("-------Currently Held-------");
+                            
                             memberCollection.ListHeld(memberCollection.FindMember(userName));
+
+                            Console.WriteLine("----------------------------");
+                            Console.WriteLine("Please press 0 to return to previous menu: ");
+
+                            if (Console.ReadLine() == "0")
+                            {
+                                Console.Clear();
+                                MenuItem(2, movieCollection, memberCollection);
+                            }
+
                             break;
                         case 5: // Display Top 10 Most Borrowed DVD's
-                            Console.WriteLine("Member Menu Option 5");
+                            Console.WriteLine("-----------Top 10------------");
+                            
+
+                            Console.WriteLine("----------------------------");
+                            Console.WriteLine("Please press 0 to return to previous menu: ");
+
+                            if (Console.ReadLine() == "0")
+                            {
+                                Console.Clear();
+                                MenuItem(2, movieCollection, memberCollection);
+                            }
                             break;
                     }
                     break;

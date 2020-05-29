@@ -99,12 +99,19 @@ namespace CAB301
 
         public void BorrowMovie(Member member, Movie movie)
         {
+            if (movie.currentCopies() == 0)
+            {
+                Console.WriteLine("The selected movie: " + movie.getTitle() + " has no more available copies to rent");
+            } else
+            {
+                member.borrowMovie(movie);
+                movie.borrow();
+                
+                Console.WriteLine("The following movie was borrowed: " + movie.getTitle() + " by: " + member.getFirst());
+            }
+           
 
-            // Check if there is enough copies availabile, then rent it. If not throw error
-
-            member.borrowMovie(movie);
-            movie.borrow();
-            Console.WriteLine("The following movie was borrowed: " + movie.getTitle() + movie.BorrowedCount()+ " by: " + member.getFirst());
+           
         }
 
         public void ReturnMovie(Movie movie, Member member)
@@ -115,6 +122,8 @@ namespace CAB301
 
         public void ListHeld(Member member)
         {
+            Console.WriteLine("-----Currently Borrowed------");
+
             try
             {
                 member.currentlyHeld();

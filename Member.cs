@@ -103,8 +103,7 @@ namespace CAB301
             {
                 foreach (Movie movie in moviesBorrowed)
                 {
-                    Console.WriteLine(movie.getTitle());
-                    
+                    movie.PrintInfo();                   
                     
                 }
             }

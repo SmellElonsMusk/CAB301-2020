@@ -59,6 +59,7 @@ namespace CAB301
 
         }
 
+
         public void AddCopies(int num)
         {
             for (int i = 0; i < num; i++) {
@@ -76,6 +77,7 @@ namespace CAB301
         public void borrow()
         {
             this.borrowedCount += 1;
+            this.copies -= 1;
         }
 
         public int BorrowedCount()
@@ -94,6 +96,21 @@ namespace CAB301
         public string getTitle()
         {
             return title;
+        }
+
+        public void PrintInfo()
+        {
+            Console.WriteLine("Title: " + title);
+            Console.WriteLine("Starring: " + starring);
+            Console.WriteLine("Direcotr: " + director);
+            Console.WriteLine("Genre: " + genre);
+            Console.WriteLine("Classification: "+ classification);
+            Console.WriteLine("Duration: "+ duration);
+            Console.WriteLine("Release Date: "+ releaseDate);
+            Console.WriteLine("Copies Available: " + copies);
+            Console.WriteLine("Times Rented: "+ borrowedCount);
+            Console.WriteLine("\n");
+
         }
 
         public override string ToString()

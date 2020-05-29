@@ -246,7 +246,7 @@ namespace CAB301
                 leftNode.InOrderTraverse();
 
             }
-            Console.WriteLine(data.getTitle());
+            data.PrintInfo(); 
             if (rightNode != null)
             {
                 rightNode.InOrderTraverse();
@@ -806,6 +806,8 @@ namespace CAB301
             binaryTree.Add(newMovie13);
             binaryTree.Add(newMovie14);
             binaryTree.Add(newMovie15);
+
+            
 
         }
 

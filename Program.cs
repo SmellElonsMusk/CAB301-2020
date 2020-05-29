@@ -65,7 +65,19 @@ namespace CAB301
             if (result)
             {
                 Console.Clear();
-                MenuItem(num, movieCollection, memberCollection);
+
+                if (num == 1)
+                {
+                    staffLogin();
+                    MenuItem(num, movieCollection, memberCollection);
+                } else if(num == 2)
+                {
+                    memberLogin(memberCollection);
+                    MenuItem(num, movieCollection, memberCollection);
+                }
+
+
+               
             }
             else { Console.WriteLine("Please enter a valid Number"); }
 
@@ -87,7 +99,6 @@ namespace CAB301
                 {
 
                     case 1:
-                        staffLogin();
                         Console.Clear();
                         Console.WriteLine("---------Staff Menu----------");
                         Console.WriteLine("1. Add a new movie DVD");
@@ -100,13 +111,6 @@ namespace CAB301
                         break;
 
                     case 2:
-
-                        if (userName == null)
-                        {
-                            memberLogin(memberCollection);
-                        }
-
-                        
                         Console.Clear();
                         Console.WriteLine("--------Member Menu---------");
                         Console.WriteLine("1. Display all movies");
@@ -268,7 +272,7 @@ namespace CAB301
                             if (Console.ReadLine() == "0")
                             {
                                 Console.Clear();
-                                MainMenu(movieCollection, memberCollection);
+                                MenuItem(2, movieCollection, memberCollection);
                             }
                             break;
                         case 2: // Borrow a DVD

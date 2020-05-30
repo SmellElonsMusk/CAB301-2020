@@ -57,6 +57,7 @@ namespace CAB301
             this.classification = classification;
             this.releaseDate = releaseDate;
             this.copies = copies;
+            this.borrowedCount = 0;
 
         }
 
@@ -89,7 +90,7 @@ namespace CAB301
          */
         public int BorrowedCount()
         {
-            return borrowedCount;
+            return this.borrowedCount;
         }
 
         /*  Lists number of current copies of this movie object

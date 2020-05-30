@@ -1069,10 +1069,7 @@ namespace CAB301
             int pivot = movies[left].BorrowedCount(); // Creates a pivot point
 
 
-            if (movies == null)
-            {
-
-            } 
+            
             
             while (true)
             {
@@ -1086,6 +1083,7 @@ namespace CAB301
                 }
                 if (left < right) //  
                 {
+                    if (movies[left].BorrowedCount() == movies[right].BorrowedCount()) return right;
                     Movie temp = movies[right]; // Creates a temp movie array
                     movies[right] = movies[left]; // shifts the movies around
                     movies[left] = temp;
@@ -1147,14 +1145,14 @@ namespace CAB301
             }
 
 
-            
 
 
-            //Movie[] TopTen = binaryTree.toBSTArray(); // Converts the Entire BST to an Array
-            //Movie[] TopTen = binaryTree.test(); // Converts the Entire BST to an Array
-            //binaryTree.TtoA();
-            //Movie[] TopTen = binaryTree.ReturnArray();
-            //int len = TopTen.Length; //TopTen.Length;
+
+            ////Movie[] TopTen = binaryTree.toBSTArray(); // Converts the Entire BST to an Array
+            ////Movie[] TopTen = binaryTree.test(); // Converts the Entire BST to an Array
+            ////binaryTree.TtoA();
+            Movie[] TopTen = movies;
+            ////int len = TopTen.Length; //TopTen.Length;
 
             //Movie[] TopTen = new Movie[5];
             //// Creates movie objects
@@ -1213,7 +1211,7 @@ namespace CAB301
             int len = movies.Length;
 
            
-            QuickSort(movies, 0, len);
+            QuickSort(TopTen, 0, len-1);
            
 
 
@@ -1222,7 +1220,7 @@ namespace CAB301
                 try
                 {
 
-                    Console.WriteLine(movies[i].getTitle() + " Borrowed Count: " + movies[i].BorrowedCount());
+                    Console.WriteLine(TopTen[i].getTitle() + " Borrowed Count: " + TopTen[i].BorrowedCount());
                 }
                 catch
                 {
@@ -1318,6 +1316,11 @@ namespace CAB301
             for (int i = 0; i < 9; i++)
             {
                 newMovie5.borrow();
+            }
+
+            for (int i = 0; i < 9; i++)
+            {
+                newMovie12.borrow();
             }
 
 

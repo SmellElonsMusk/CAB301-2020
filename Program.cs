@@ -395,7 +395,8 @@ namespace CAB301
                 Console.Write("Enter Username: "); userName = Console.ReadLine();
                 Console.Write("Enter Password: "); input2 = Console.ReadLine();
 
-                if (usernames.Contains(userName) && passwords.Contains(Int32.Parse(input2)))
+                
+                  if (usernames.Contains(userName) && passwords.Contains(Int32.Parse(input2)))
                 {
                    
                     succesful = true;

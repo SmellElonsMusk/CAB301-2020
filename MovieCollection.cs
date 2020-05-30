@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using System.Drawing;
 using System.Text;
 using System.Threading;
@@ -25,7 +26,7 @@ namespace CAB301
         private Movie data;
         private TreeNode rightNode;
         private TreeNode leftNode;
-
+        public int arrayCount = 0;
         private TreeNode parentNode;
         public Colour colour;
 
@@ -270,32 +271,34 @@ namespace CAB301
         //    movies = new Movie[15];
         //}
 
-        public void BSTtoArray(Movie[] movies, int arrayCount)
+            
+
+        public void BSTtoArray(Movie[] movies)
         {
-            int current = arrayCount;
+
+
+
+
             if (leftNode != null)
             {
-                leftNode.BSTtoArray(movies, arrayCount);
+                leftNode.BSTtoArray(movies);
 
             }
-            if (this != null)
-            {
-                //if ( arrayCount > 15)
-                //{
+            movies[arrayCount] = data;
+            arrayCount += 1;
 
-                //} else
-                //{
-                    movies[current] = data;
-                    //Console.WriteLine(movies[i].getTitle());
-                    arrayCount = arrayCount + 1;
-                //}
-                
-            }
-            
             if (rightNode != null)
             {
-                rightNode.BSTtoArray(movies, arrayCount);
+                rightNode.BSTtoArray(movies);
+
             }
+            //if (this != null ? leftNode != null : rightNode != null)
+            //{
+            //    movies[arrayCount] = data;
+            //    arrayCount += 1;
+            //    leftNode.BSTtoArray(movies);
+            //}
+
         }
 
         //public Movie[] ReturnArray()
@@ -406,8 +409,7 @@ namespace CAB301
      */
     class BinarySearchTree
     {
-        Movie[] movies = new Movie[15];
-        int arrayCount = 0;
+        
         private TreeNode root;
 
         /* Create the root Node
@@ -630,31 +632,31 @@ namespace CAB301
         }
 
       
-        public void BSTtoArr()
-        {
+        //public void BSTtoArr()
+        //{
             
-                root.BSTtoArray(movies, arrayCount);
+        //        root.BSTtoArray(movies);
             
-        }
+        //}
 
-        public Movie[] ReturnArray()
-        {
-            try
-            {
+        //public Movie[] ReturnArray()
+        //{
+        //    try
+        //    {
                 
-                //while (root!= null)
-                //{
-                //    root.BSTtoArray();
-                //}
+        //        //while (root!= null)
+        //        //{
+        //        //    root.BSTtoArray();
+        //        //}
                 
                 
-            }
-            catch
-            {
-                Console.WriteLine("Array Creation failed");
-            }
-            return movies;
-        }
+        //    }
+        //    catch
+        //    {
+        //        Console.WriteLine("Array Creation failed");
+        //    }
+        //    return movies;
+        //}
 
 
 
@@ -733,6 +735,12 @@ namespace CAB301
             }
             return c;
         }
+
+
+        
+
+        
+
 
         public void PreOrder(TreeNode node, Movie[] movies, int num)
         {
@@ -1107,76 +1115,106 @@ namespace CAB301
 
         }
 
+
+
+        
+
+         
         public void TopTen()
         {
+
+            Movie[] movies = new Movie[15]; // function for root count
+
+
+            treeToArray(binaryTree.Root);
+
+            void treeToArray(TreeNode node)
+            {
+                if (node != null)
+                {
+                    treeToArray(node.LeftNode);
+                    for (int i = 0; i < movies.Length; i++)
+                    {
+                        if (movies[i] == null)
+                        {
+                            movies[i] = node.Data();
+                            break;
+                        }
+
+                    }
+                    treeToArray(node.RightNode);
+                }
+            }
+
+
+            
+
+
             //Movie[] TopTen = binaryTree.toBSTArray(); // Converts the Entire BST to an Array
             //Movie[] TopTen = binaryTree.test(); // Converts the Entire BST to an Array
-            //binaryTree.BSTtoArr();
+            //binaryTree.TtoA();
             //Movie[] TopTen = binaryTree.ReturnArray();
             //int len = TopTen.Length; //TopTen.Length;
 
-            Movie[] TopTen = new Movie[5];
-            // Creates movie objects
-            Movie newMovie1 = new Movie();
-            Movie newMovie2 = new Movie();
-            Movie newMovie3 = new Movie();
-            Movie newMovie4 = new Movie();
-            Movie newMovie5 = new Movie();
+            //Movie[] TopTen = new Movie[5];
+            //// Creates movie objects
+            //Movie newMovie1 = new Movie();
+            //Movie newMovie2 = new Movie();
+            //Movie newMovie3 = new Movie();
+            //Movie newMovie4 = new Movie();
+            //Movie newMovie5 = new Movie();
 
-            newMovie1.create("Star Wars Episode IV: A New Hope", "Harrison Ford", "George Lucas", "125", Genre.SciFi, Classification.M, "1977", 5);
-            newMovie2.create("Star Wars Episode V: Empire Strikes Back", "Harrison Ford", "George Lucas", "127", Genre.SciFi, Classification.M, "1980", 3);
-            newMovie3.create("Star Wars Episode VI: Return of the Jedi", "Harrison Ford", "George Lucas", "136", Genre.SciFi, Classification.M, "1983", 6);
-            newMovie4.create("Star Wars Episode I: The Phantom Menace", "Ewan McGreggor", "George Lucas", "133", Genre.SciFi, Classification.M, "1999", 2);
-            newMovie5.create("Star Wars Episode II: Attack of the Clones", "Ewan McGreggor", "George Lucas", "142", Genre.SciFi, Classification.M, "2002", 10);
+            //newMovie1.create("Star Wars Episode IV: A New Hope", "Harrison Ford", "George Lucas", "125", Genre.SciFi, Classification.M, "1977", 5);
+            //newMovie2.create("Star Wars Episode V: Empire Strikes Back", "Harrison Ford", "George Lucas", "127", Genre.SciFi, Classification.M, "1980", 3);
+            //newMovie3.create("Star Wars Episode VI: Return of the Jedi", "Harrison Ford", "George Lucas", "136", Genre.SciFi, Classification.M, "1983", 6);
+            //newMovie4.create("Star Wars Episode I: The Phantom Menace", "Ewan McGreggor", "George Lucas", "133", Genre.SciFi, Classification.M, "1999", 2);
+            //newMovie5.create("Star Wars Episode II: Attack of the Clones", "Ewan McGreggor", "George Lucas", "142", Genre.SciFi, Classification.M, "2002", 10);
 
-            newMovie1.borrow();
-            newMovie1.borrow();
-            newMovie1.borrow();
-            newMovie1.borrow();
-            newMovie1.borrow();
+            //newMovie1.borrow();
+            //newMovie1.borrow();
+            //newMovie1.borrow();
+            //newMovie1.borrow();
+            //newMovie1.borrow();
 
-            newMovie2.borrow();
-            newMovie2.borrow();
-            newMovie2.borrow();
+            //newMovie2.borrow();
+            //newMovie2.borrow();
+            //newMovie2.borrow();
 
-            newMovie3.borrow();
-            newMovie3.borrow();
-            newMovie3.borrow();
-            newMovie3.borrow();
-            newMovie3.borrow();
-            newMovie3.borrow();
+            //newMovie3.borrow();
+            //newMovie3.borrow();
+            //newMovie3.borrow();
+            //newMovie3.borrow();
+            //newMovie3.borrow();
+            //newMovie3.borrow();
 
-            newMovie4.borrow();
-            newMovie4.borrow();
+            //newMovie4.borrow();
+            //newMovie4.borrow();
 
-            newMovie5.borrow();
-            newMovie5.borrow();
-            newMovie5.borrow();
-            newMovie5.borrow();
-            newMovie5.borrow();
-            newMovie5.borrow();
-            newMovie5.borrow();
-            newMovie5.borrow();
-            newMovie5.borrow();
-            newMovie5.borrow();
+            //newMovie5.borrow();
+            //newMovie5.borrow();
+            //newMovie5.borrow();
+            //newMovie5.borrow();
+            //newMovie5.borrow();
+            //newMovie5.borrow();
+            //newMovie5.borrow();
+            //newMovie5.borrow();
+            //newMovie5.borrow();
+            //newMovie5.borrow();
 
 
-            TopTen[0] = newMovie1;
-            TopTen[1] = newMovie2;
-            TopTen[2] = newMovie3;
-            TopTen[3] = newMovie4;
-            TopTen[4] = newMovie5;
+            //TopTen[0] = newMovie1;
+            //TopTen[1] = newMovie2;
+            //TopTen[2] = newMovie3;
+            //TopTen[3] = newMovie4;
+            //TopTen[4] = newMovie5;
 
-            int len = TopTen.Length - 1;
 
-            //try
-            //{
-            QuickSort(TopTen, 0, len);
-           // }
-           // catch
-           // {
 
-           // }
+            int len = movies.Length;
+
+           
+            QuickSort(movies, 0, len);
+           
 
 
             for (int i = len; i >= 0; i--)
@@ -1184,7 +1222,7 @@ namespace CAB301
                 try
                 {
 
-                    Console.WriteLine(TopTen[i].getTitle() + " Borrowed Count: " + TopTen[i].BorrowedCount());
+                    Console.WriteLine(movies[i].getTitle() + " Borrowed Count: " + movies[i].BorrowedCount());
                 }
                 catch
                 {
@@ -1283,21 +1321,21 @@ namespace CAB301
             }
 
 
-            //newMovie1.borrow();
-            //newMovie2.borrow();
-            //newMovie3.borrow();
-            //newMovie4.borrow();
-            //newMovie5.borrow();
-            //newMovie6.borrow();
-            //newMovie7.borrow();
-            //newMovie8.borrow();
-            //newMovie9.borrow();
-            //newMovie10.borrow();
-            //newMovie11.borrow();
-            //newMovie12.borrow();
-            //newMovie13.borrow();
-            //newMovie14.borrow();
-            //newMovie15.borrow();
+            newMovie1.borrow();
+            newMovie2.borrow();
+            newMovie3.borrow();
+            newMovie4.borrow();
+            newMovie5.borrow();
+            newMovie6.borrow();
+            newMovie7.borrow();
+            newMovie8.borrow();
+            newMovie9.borrow();
+            newMovie10.borrow();
+            newMovie11.borrow();
+            newMovie12.borrow();
+            newMovie13.borrow();
+            newMovie14.borrow();
+            newMovie15.borrow();
 
 
 

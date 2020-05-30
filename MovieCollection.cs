@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace CAB301
 {
-   
+
 
     /* Enum for Red/Black Tree
      */
@@ -22,7 +22,7 @@ namespace CAB301
     */
     class TreeNode
     {
-        
+
         private Movie data;
         private TreeNode rightNode;
         private TreeNode leftNode;
@@ -55,7 +55,7 @@ namespace CAB301
         {
             this.colour = colour;
             this.data = movie;
-        } // Red Black
+        } // Red/Black
 
         /* Right Child Node
          */
@@ -153,35 +153,6 @@ namespace CAB301
 
         }
 
-        /* Finds the node storing the movie
-         * 
-         * 
-         */
-        public TreeNode FindMovie1(string title)
-        {
-            TreeNode currentNode = this;
-
-            while (currentNode != null)
-            {
-                if (currentNode.data.getTitle() == title) // If the title matches the current Node
-                {
-                    return this;
-                }
-                else if (String.CompareOrdinal(title, currentNode.data.getTitle()) > 0) // If the Title appears after current
-                {
-                    currentNode = currentNode.rightNode;
-                }
-                else // If the Title appears before current 
-                {
-                    currentNode = currentNode.leftNode;
-                }
-
-
-            }
-            return null; // if the node does not exist
-
-        } // doesn't work
-
         /* Searchs the tree for the node that contains the title
          * 
          */
@@ -210,10 +181,7 @@ namespace CAB301
 
         }
 
-
-
-
-        /* Checks the height of the current tree -- Needs to be re written a bit
+        /* Checks the height of the current tree 
          * -> Number of levels 
          */
         public int Height()
@@ -245,7 +213,6 @@ namespace CAB301
 
         }
 
-
         /* Searches the Tree In Order
          * Left->Root->Right Nodes recursively of each subtree 
          * Sorted Alphabetically
@@ -265,75 +232,6 @@ namespace CAB301
 
 
         }
-
-        //public void InitArray(int size)
-        //{
-        //    movies = new Movie[15];
-        //}
-
-            
-
-        public void BSTtoArray(Movie[] movies)
-        {
-
-
-
-
-            if (leftNode != null)
-            {
-                leftNode.BSTtoArray(movies);
-
-            }
-            movies[arrayCount] = data;
-            arrayCount += 1;
-
-            if (rightNode != null)
-            {
-                rightNode.BSTtoArray(movies);
-
-            }
-            //if (this != null ? leftNode != null : rightNode != null)
-            //{
-            //    movies[arrayCount] = data;
-            //    arrayCount += 1;
-            //    leftNode.BSTtoArray(movies);
-            //}
-
-        }
-
-        //public Movie[] ReturnArray()
-        //{
-        //    //for (int i = 0; i < 15; i++)          //testing code
-        //    //{
-        //    //    Console.WriteLine(movies[i].getTitle());
-        //    //}
-        //    return movies;
-        //}
-
-
-        public Movie ReturnMovie()
-        {
-            if (leftNode != null)
-            {
-                leftNode.ReturnMovie();
-
-            }
-
-            if (leftNode != null)
-            {
-                return data;
-            }
-
-
-            if (rightNode != null)
-            {
-                rightNode.ReturnMovie();
-
-            }
-
-            return null;
-        }
-
         /* Searches Tree
          * Root->Left->Right Nodes recursively of each subtree 
          */
@@ -387,7 +285,7 @@ namespace CAB301
             {
                 return data;
             }
-            
+
             if (rightNode != null)
             {
                 rightNode.MovieInOrderTraverse();
@@ -409,7 +307,7 @@ namespace CAB301
      */
     class BinarySearchTree
     {
-        
+
         private TreeNode root;
 
         /* Create the root Node
@@ -583,7 +481,7 @@ namespace CAB301
 
         }
 
-        /* Gets the succesor of the current treenode
+        /* Gets the succesor of the current TreeNode
          */
         private TreeNode GetSuccesor(TreeNode node)
         {
@@ -620,105 +518,6 @@ namespace CAB301
             return root.Height();
         }
 
-        /* Traverse the tree in order of nodes
-         * left -> root -> right
-         */
-        public void InOrderTraversal()
-        {
-            if (root != null)
-            {
-                root.InOrderTraverse();
-            }
-        }
-
-      
-        //public void BSTtoArr()
-        //{
-            
-        //        root.BSTtoArray(movies);
-            
-        //}
-
-        //public Movie[] ReturnArray()
-        //{
-        //    try
-        //    {
-                
-        //        //while (root!= null)
-        //        //{
-        //        //    root.BSTtoArray();
-        //        //}
-                
-                
-        //    }
-        //    catch
-        //    {
-        //        Console.WriteLine("Array Creation failed");
-        //    }
-        //    return movies;
-        //}
-
-
-
-
-        public Movie MovieInOrderTraversal() // not used
-        {
-            if (root != null)
-            {
-                //root.MovieInOrderTraverse();
-                return root.Data();
-            }
-
-            return null; // if it fails
-        }
-
-        public Movie[] test() // not used
-        {
-            int size = count(root);
-            Movie[] movies = new Movie[size];
-            int num = 0;
-
-            while (num != size)
-            {
-                movies[num] = root.MovieInOrderTraverse();
-                num += 1;
-
-            }
-            return movies;
-        }
-
-
-
-        /* Leaf count helper function 
-         */
-        public virtual int LeafCount
-        {
-            get
-            {
-                return getLeafCount(root);
-            }
-
-
-        }
-
-        /* Counts the number of Leaf Nodes
-         * 
-         */
-        public virtual int getLeafCount(TreeNode node)
-        {
-            if (node == null)
-            {
-                return 0;
-            } if (node.LeftNode == null && node.RightNode == null)
-            {
-                return 1;
-
-            } else
-            {
-                return getLeafCount(node.LeftNode) + getLeafCount(node.RightNode);
-            }
-        }
-
         /* Counts the number of nodes in the BST
          */
         public int count(TreeNode node)
@@ -736,81 +535,46 @@ namespace CAB301
             return c;
         }
 
-
-        
-
-        
-
-
-        public void PreOrder(TreeNode node, Movie[] movies, int num)
+        /* Leaf count helper function 
+         */
+        public virtual int LeafCount
         {
-            
+            get
+            {
+                return getLeafCount(root);
+            }
+
+        }
+
+        /* Counts the number of Leaf Nodes
+         * 
+         */
+        public virtual int getLeafCount(TreeNode node)
+        {
             if (node == null)
             {
-                movies[num] = node.Data();
-                num += 1;
+                return 0;
             }
-            PreOrder(root.LeftNode, movies, num);
-            PreOrder(root.RightNode, movies, num);
-
-            
-        }
-
-        // Bst to array
-
-        public Movie[] toBSTArray()
-        {
-
-            int size = count(root);//; // Finds the # of nodes in the tree
-            int num = 0;
-            Movie[] movies = new Movie[size];
-
-            while ( num <= size)
+            if (node.LeftNode == null && node.RightNode == null)
             {
-                PreOrder(root, movies, num);
-            }
-            
+                return 1;
 
-            //MakeArray(root, 0, movies);
-            return movies;
+            }
+            else
+            {
+                return getLeafCount(node.LeftNode) + getLeafCount(node.RightNode);
+            }
         }
 
-        // Helper function
-        public void MakeArray(TreeNode node, int i, Movie[] movies)
+        /* Traverse the tree in order of nodes
+         * left -> root -> right
+         */
+        public void InOrderTraversal()
         {
-
-            
-
-            /* 
-             * https://stackoverflow.com/questions/13870118/converting-bst-to-array
-             * 
-             */
-
-            //if (node != null)
-            //{
-            //    movies[i] = root.Data(); // Assigns the Node data to the array
-            //    i += 1;
-            //    MakeArray(node.LeftNode, i, movies);
-            //    MakeArray(node.RightNode, i, movies);
-
-            //}
-
-            //if (root.LeftNode != null)
-            //{
-            //    movies[i] = root.Data();
-            //    i += 1;
-            //    MakeArray(node.RightNode, i, movies);
-            //}
-
-            //if (root.RightNode != null)
-            //{
-            //    movies[i] = root.Data();
-            //    i += 1;
-            //    MakeArray(node.LeftNode, i, movies);
-            //}
-
-
-           
+            if (root != null)
+            {
+                root.InOrderTraverse();
+            }
         }
 
         /* Traverse the tree in order 
@@ -834,32 +598,6 @@ namespace CAB301
                 root.PostOrderTraversal();
             }
         }
-
-        /* Searches the tree for the top remted movie
-         *  left -> root -> right
-         */ // does nothing
-        public void TopTen()
-        {
-            // Algorithm that finds max rented
-            int MaxCount = 12; // needs to be added
-            // Algorithm that searches based on the max
-
-            //root.Search(MaxCount);
-        }
-
-
-        //public Movie [] preOrder (TreeNode node)
-        //{
-        //    //Movie[] movies = new Movies[]
-        //    //if (root != null)
-        //    //{
-        //    //    return root
-        //    //}
-        //}
-
-
-
-
 
     }
 
@@ -909,7 +647,7 @@ namespace CAB301
                 Console.Write("Enter the Duration(mins):"); param4 = Console.ReadLine();
 
                 // Select a Genre from the Enum List
-                Console.WriteLine("Select the Genre:");
+                Console.WriteLine("\n Select the Genre:");
                 int num = 1;
                 foreach (string str in Enum.GetNames(typeof(Genre)))
                 {
@@ -938,22 +676,15 @@ namespace CAB301
                 int sel = 0;
                 foreach (Genre genre in Enum.GetValues(typeof(Genre)))
                 {
-
                     sel += 1;
-
                     if (sel == param5)
                     {
-
                         thisGenre = genre;
-
-
-
                     }
                 }
 
-
                 // Select a Classification from the Enum List
-                Console.WriteLine("Select the Classification:");
+                Console.WriteLine("\nSelect the Classification:");
                 num = 1;
                 foreach (string str in Enum.GetNames(typeof(Classification)))
                 {
@@ -981,9 +712,7 @@ namespace CAB301
                 int sel2 = 0;
                 foreach (Classification classification in Enum.GetValues(typeof(Classification)))
                 {
-
                     sel2 += 1;
-
                     if (sel2 == param5)
                     {
                         thisClassification = classification;
@@ -1012,7 +741,7 @@ namespace CAB301
             binaryTree.InOrderTraversal();
             Console.WriteLine("----------------------------");
             // Gets user input for title
-            Console.WriteLine("Enter the Movie Title: ");
+            Console.Write("Enter the Movie Title: ");
             string input = Console.ReadLine();
 
             // Checks if the title exists
@@ -1021,7 +750,9 @@ namespace CAB301
             {
                 try
                 {
+                    
                     binaryTree.FindMovie(input).Data();
+                    //Console.Write("The movie: " + binaryTree.FindMovie(input).Data().getTitle() + " Was Deleted");
                     success = true;
                 }
                 catch (NullReferenceException) // Title not found. Repeats the process
@@ -1040,6 +771,9 @@ namespace CAB301
 
         }
 
+        /* Finds the movie in the binaryTree which contains the given title
+         *   -> Helper Function
+         */
         public Movie findMovie(string title)
         {
             try
@@ -1051,17 +785,18 @@ namespace CAB301
                 // do nothing
             }
             return null;
-        }
+        } // Finished
 
         /* Prints all current Movie Titles to the Console
+         * -> Prints in Alphabetical Order
          */
         public void displayAllMovies() // Finished 
         {
             binaryTree.InOrderTraversal();
         }
 
-        /*
-         *  https://www.tutorialspoint.com/chash-program-to-perform-quick-sort-using-recursion
+        /* Quick Sort Algorithm - > Partition the array into 2 sub arrays
+         * 
          * 
          */
         public int Partition(Movie[] movies, int left, int right)
@@ -1085,8 +820,11 @@ namespace CAB301
             movies[i + 1] = movies[right];
             movies[right] = temp;
             return i + 1;
-        }
+        } // Finished
 
+        /* Quick Sort Function for sorting the Movies in the Array by the Num of times rented
+         * 
+         */
         public void QuickSort(Movie[] movies, int left, int right)
         {
             if (left < right)
@@ -1097,16 +835,24 @@ namespace CAB301
             }
 
 
-        }
+        } // Finished 
 
+        /* Displays the Top 10 Most Rented Movies 
+         * 
+         */
         public void TopTen()
         {
 
-            Movie[] movies = new Movie[15]; // function for root count
+            int indexSize = binaryTree.count(binaryTree.Root); // Gets the numbver of nodes in the current BST
+            Movie[] movies = new Movie[indexSize];  // Creates a new Movie[] array to store data from the BST ready to be sorted
 
-
+            // Recursively Populates the Movie[] Array which each movie in the BST
             treeToArray(binaryTree.Root);
 
+            /* Traverses the array in order 
+             * and returns the movie stored within the node
+             * then stores the movie in the Movie[] Array
+             */
             void treeToArray(TreeNode node)
             {
                 if (node != null)
@@ -1123,19 +869,19 @@ namespace CAB301
                     }
                     treeToArray(node.RightNode);
                 }
-            }
+            } // Finished
 
+            // Sends the unsorted array to the new Arrat to be sorted
             Movie[] TopTen = movies;
-            
-
             int len = movies.Length;
 
-           
-            QuickSort(movies, 0, len-1);
-           
+            // Runs QuickSort to sort the array from lowest -> highest BorrowedCount 
+            QuickSort(movies, 0, len - 1);
 
-
-            for (int i = len; i > len-10; i--)
+            /* Prints the Array to console in order of highest -> lowest BorrowedCount 
+             * Max 10 Titles Printed
+            */
+            for (int i = len; i > len - 11; i--)
             {
                 try
                 {
@@ -1144,18 +890,10 @@ namespace CAB301
                 }
                 catch
                 {
-
+                    // Cathes any Null Exception fails, ignores them
                 }
-
             }
-
-
-
-        }
-
-
-
-
+        } // Finished
 
         /* Adds 15 Movies to the List
          */
@@ -1196,11 +934,7 @@ namespace CAB301
             newMovie14.create("Avengers: Infinity War", "Chris Hemsworth, Robert Downey J.r", "Joe Russo, Anthoiny Russo", "149", Genre.Action, Classification.M, "2018", 11);
             newMovie15.create("Avengers: End Game", "Chris Hemsworth, Robert Downey J.r", "Joe Russo, Anthoiny Russo", "181", Genre.Action, Classification.M, "", 13);
 
-
-
-
-
-            // Adds movies to the BSS
+            // Adds movies to the BST
             binaryTree.Add(newMovie1);
             binaryTree.Add(newMovie2);
             binaryTree.Add(newMovie3);
@@ -1217,7 +951,7 @@ namespace CAB301
             binaryTree.Add(newMovie14);
             binaryTree.Add(newMovie15);
 
-            // Rents movies for Top 10 List -- testing
+            // Rents movies out for Top 10 List 
             for (int i = 0; i < 12; i++)
             {
                 newMovie15.borrow();
@@ -1252,27 +986,6 @@ namespace CAB301
             {
                 newMovie12.borrow();
             }
-
-
-            newMovie1.borrow();
-            newMovie2.borrow();
-            newMovie3.borrow();
-            newMovie4.borrow();
-            newMovie5.borrow();
-            newMovie6.borrow();
-            newMovie7.borrow();
-            newMovie8.borrow();
-            newMovie9.borrow();
-            newMovie10.borrow();
-            newMovie11.borrow();
-            newMovie12.borrow();
-            newMovie13.borrow();
-            newMovie14.borrow();
-            newMovie15.borrow();
-
-
-
-
 
         }
 

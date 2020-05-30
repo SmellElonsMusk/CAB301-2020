@@ -30,13 +30,11 @@ namespace CAB301
 
             MovieCollection movieCollection = new MovieCollection(); // Initliase The class
             MemberCollection memberCollection = new MemberCollection(); // initliases memberCollection Class
-            BinarySearchTree movieList = new BinarySearchTree();
-
-            
+            //BinarySearchTree movieList = new BinarySearchTree();
 
             // Adds 3 Members to the program
             memberCollection.registerMembers();
-                        
+
             // Adds 15 Movies to the BST
             movieCollection.AddMovies();
             MainMenu(movieCollection, memberCollection);
@@ -65,21 +63,25 @@ namespace CAB301
             if (result)
             {
                 Console.Clear();
-
                 if (num == 1)
                 {
                     staffLogin();
                     MenuItem(num, movieCollection, memberCollection);
-                } else if(num == 2)
+                }
+                else if (num == 2)
                 {
                     memberLogin(memberCollection);
                     MenuItem(num, movieCollection, memberCollection);
                 }
-
-
-               
             }
-            else { Console.WriteLine("Please enter a valid Number"); }
+            else
+            {
+                Console.Clear();
+               
+                Console.WriteLine("Please enter a valid Number \n");
+                MainMenu(movieCollection, memberCollection);
+
+            }
 
         }
 
@@ -145,7 +147,7 @@ namespace CAB301
 
 
             bool repeatMenu = true;
-            
+
 
             switch (menu)
             {
@@ -187,7 +189,7 @@ namespace CAB301
                             while (repeatMenu)
                             {
                                 movieCollection.removeMovie();
-                                Console.Clear();
+                                
                                 Console.WriteLine("--------Remove DVD----------");
                                 Console.WriteLine("1. Remove Another Movie ");
                                 Console.WriteLine("----------------------------");
@@ -233,7 +235,7 @@ namespace CAB301
                             while (repeatMenu)
                             {
                                 memberCollection.FindMember();
-                                
+
                                 Console.WriteLine("--------Find Member---------");
                                 Console.WriteLine("1. Find Another Member ");
                                 Console.WriteLine("----------------------------");
@@ -291,7 +293,7 @@ namespace CAB301
 
                             break;
                         case 3: // Return a DVD
-                           
+
                             Console.WriteLine("--------Return Movie--------");
                             memberCollection.ListHeld(memberCollection.FindMember(userName));
                             Console.Write("Enter movie title: "); title = Console.ReadLine();
@@ -307,7 +309,7 @@ namespace CAB301
                             break;
                         case 4: // List Current Borrowed DVD's
                             Console.WriteLine("-------Currently Held-------");
-                            
+
                             memberCollection.ListHeld(memberCollection.FindMember(userName));
 
                             Console.WriteLine("----------------------------");
@@ -346,9 +348,9 @@ namespace CAB301
             string input1;
             string input2;
             Console.WriteLine("----------Staff Login-----------");
-            while (succesful == false)
+            while (!succesful)
             {
-               
+
                 Console.Write("Enter Username: "); input1 = Console.ReadLine();
                 Console.Write("Enter Password: "); input2 = Console.ReadLine();
                 if (input1 == "staff" && input2 == "today123")
@@ -358,16 +360,17 @@ namespace CAB301
                 else
                 {
                     Console.Clear();
+                    Console.WriteLine("----------Staff Login-----------");
                     Console.WriteLine("Login failed. Please try again.");
-                    
-                    
+
+
                 }
             }
         }
 
         /* Member Login Page
          */ // Finished
-        public static void memberLogin(MemberCollection memberCollection )
+        public static void memberLogin(MemberCollection memberCollection)
         {
 
             // Probably need to add a method that checks if the member list has any members
@@ -389,16 +392,16 @@ namespace CAB301
 
 
             Console.WriteLine("---------Member Login-----------");
-            while (succesful == false)
+            while (!succesful)
 
             {
                 Console.Write("Enter Username: "); userName = Console.ReadLine();
                 Console.Write("Enter Password: "); input2 = Console.ReadLine();
 
-                
-                  if (usernames.Contains(userName) && passwords.Contains(Int32.Parse(input2)))
+
+                if (usernames.Contains(userName) && passwords.Contains(Int32.Parse(input2)))
                 {
-                   
+
                     succesful = true;
                 }
 
@@ -406,7 +409,8 @@ namespace CAB301
                 {
                     Console.Clear();
                     Console.WriteLine("Login failed. Please try again.");
- 
+                    Console.WriteLine("---------Member Login-----------");
+
                     succesful = false;
                 }
             }

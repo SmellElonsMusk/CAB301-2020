@@ -89,6 +89,7 @@ namespace CAB301
                     if (movie.getTitle() == moviesBorrowed[i].getTitle())
                     {
                         moviesBorrowed[i] = null;
+
                     }
                 }
                 catch

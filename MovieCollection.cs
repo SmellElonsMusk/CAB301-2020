@@ -1064,35 +1064,27 @@ namespace CAB301
          *  https://www.tutorialspoint.com/chash-program-to-perform-quick-sort-using-recursion
          * 
          */
-        static public int Partition(Movie[] movies, int left, int right)
+        public int Partition(Movie[] movies, int left, int right)
         {
-            int pivot = movies[left].BorrowedCount(); // Creates a pivot point
+            Movie temp;
+            int pivot = movies[right].BorrowedCount(); // Creates a pivot point
+            int i = left - 1;
 
-
-            
-            
-            while (true)
+            for (int j = left; j <= right - 1; j++)
             {
-                while (movies[left].BorrowedCount() < pivot) // If the movies to the left of th
+                if (movies[j].BorrowedCount() <= pivot)
                 {
-                    left++;
-                }
-                while (movies[right].BorrowedCount() > pivot) //  
-                {
-                    right--;
-                }
-                if (left < right) //  
-                {
-                    if (movies[left].BorrowedCount() == movies[right].BorrowedCount()) return right;
-                    Movie temp = movies[right]; // Creates a temp movie array
-                    movies[right] = movies[left]; // shifts the movies around
-                    movies[left] = temp;
-                }
-                else
-                {
-                    return right;
+                    i++;
+                    temp = movies[i];
+                    movies[i] = movies[j];
+                    movies[j] = temp;
                 }
             }
+
+            temp = movies[i + 1];
+            movies[i + 1] = movies[right];
+            movies[right] = temp;
+            return i + 1;
         }
 
         public void QuickSort(Movie[] movies, int left, int right)
@@ -1100,24 +1092,13 @@ namespace CAB301
             if (left < right)
             {
                 int pivot = Partition(movies, left, right);
-                if (pivot > 1)
-                {
-                    QuickSort(movies, left, pivot - 1);
-                }
-                if (pivot + 1 < right)
-                {
-                    QuickSort(movies, pivot + 1, right);
-                }
+                QuickSort(movies, left, pivot - 1);
+                QuickSort(movies, pivot + 1, right);
             }
 
 
         }
 
-
-
-        
-
-         
         public void TopTen()
         {
 
@@ -1211,16 +1192,16 @@ namespace CAB301
             int len = movies.Length;
 
            
-            QuickSort(TopTen, 0, len-1);
+            QuickSort(movies, 0, len-1);
            
 
 
-            for (int i = len; i >= 0; i--)
+            for (int i = 0; i < len; i++)
             {
                 try
                 {
 
-                    Console.WriteLine(TopTen[i].getTitle() + " Borrowed Count: " + TopTen[i].BorrowedCount());
+                    Console.WriteLine(movies[i].getTitle() + " Borrowed Count: " + movies[i].BorrowedCount());
                 }
                 catch
                 {
@@ -1313,12 +1294,22 @@ namespace CAB301
                 newMovie13.borrow();
             }
 
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < 4; i++)
             {
                 newMovie5.borrow();
             }
 
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < 55; i++)
+            {
+                newMovie6.borrow();
+            }
+
+            for (int i = 0; i < 3; i++)
+            {
+                newMovie3.borrow();
+            }
+
+            for (int i = 0; i < 2; i++)
             {
                 newMovie12.borrow();
             }
